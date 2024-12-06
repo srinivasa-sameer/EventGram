@@ -23,6 +23,7 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //title = "Login"
 
         // Add targets for buttons
         loginScreen.signInButton.addTarget(

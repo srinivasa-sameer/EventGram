@@ -11,7 +11,6 @@ class CreateEventView: UIView {
 
     var scrollView: UIScrollView!
     var contentView: UIView!
-    var backButton: UIButton!
     var titleLabel: UILabel!
     var subtitleLabel: UILabel!
     var eventTitleTextField: UITextField!
@@ -32,7 +31,6 @@ class CreateEventView: UIView {
 
         setupScrollView()
         setupContentView()
-        setupBackButton()
         setupTitleLabel()
         setupSubtitleLabel()
         setupEventTitleField()
@@ -61,13 +59,13 @@ class CreateEventView: UIView {
         scrollView.addSubview(contentView)
     }
 
-    func setupBackButton() {
-        backButton = UIButton()
-        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        backButton.tintColor = .black
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(backButton)
-    }
+//    func setupBackButton() {
+//        backButton = UIButton()
+//        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+//        backButton.tintColor = .black
+//        backButton.translatesAutoresizingMaskIntoConstraints = false
+//        contentView.addSubview(backButton)
+//    }
 
     func setupTitleLabel() {
         titleLabel = UILabel()
@@ -203,15 +201,15 @@ class CreateEventView: UIView {
                 equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
-            // Back button
-            backButton.topAnchor.constraint(
-                equalTo: contentView.topAnchor, constant: 12),
-            backButton.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor, constant: 16),
+//            // Back button
+//            backButton.topAnchor.constraint(
+//                equalTo: contentView.topAnchor, constant: 12),
+//            backButton.leadingAnchor.constraint(
+//                equalTo: contentView.leadingAnchor, constant: 16),
 
             // Title
             titleLabel.topAnchor.constraint(
-                equalTo: backButton.bottomAnchor, constant: 20),
+                equalTo: contentView.bottomAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(
                 equalTo: contentView.leadingAnchor, constant: 20),
 

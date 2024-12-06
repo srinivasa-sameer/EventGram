@@ -2,17 +2,22 @@
 //  CreateEventViewController.swift
 //  EventGram
 //
-//  Created by Srinivasa Sameer Addepalli on 11/29/24.
+//  Created by Srikar Nallapu on 11/29/24.
 //
 
 import UIKit
 
 class CreateEventViewController: UIViewController {
-
+    
+    var delegate: EventsViewController!
+    let createEventView = CreateEventView()
+    
+    override func loadView() {
+        view = createEventView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
 

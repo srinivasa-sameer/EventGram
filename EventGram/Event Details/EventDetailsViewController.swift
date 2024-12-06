@@ -2,28 +2,33 @@
 //  EventDetailsViewController.swift
 //  EventGram
 //
-//  Created by Srinivasa Sameer Addepalli on 11/29/24.
+//  Created by Srikar Nallapu on 11/29/24.
 //
 
 import UIKit
 
 class EventDetailsViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    
+    var event: Event? // Property to hold event data
+    let detailsView = EventDetailsView()
+    
+    override func loadView() {
+        view = detailsView
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Customize the details view with event data
+        if let event = event {
+            detailsView.titleLabel.text = event.title
+            detailsView.descriptionLabel.text = event.title
+            detailsView.dateLabel.text = DateFormatter.localizedString(from: event.date, dateStyle: .medium, timeStyle: .short)
+            detailsView.locationLabel.text = event.location
+            
+            if let imageUrl = event.imageUrl, let url = URL(string: imageUrl) {
+                detailsView.eventImageView.af.setImage(withURL: url, placeholderImage: UIImage(systemName: "photo"))
+            }
+        }
     }
-    */
-
 }

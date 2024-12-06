@@ -21,6 +21,7 @@ class RegisterViewController: UIViewController {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
+        //title = "Register"
 
         let tapRecognizer = UITapGestureRecognizer(
             target: self, action: #selector(hideKeyboardOnTap))
