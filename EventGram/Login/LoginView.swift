@@ -98,7 +98,7 @@ class LoginView: UIView {
     
     func initConstraints() {
         NSLayoutConstraint.activate([
-            welcomeLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12),
+            welcomeLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40),
             welcomeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             
             eventGramLabel.topAnchor.constraint(equalTo: welcomeLabel.topAnchor),

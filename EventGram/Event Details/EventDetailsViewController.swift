@@ -22,7 +22,7 @@ class EventDetailsViewController: UIViewController {
         // Customize the details view with event data
         if let event = event {
             detailsView.titleLabel.text = event.title
-            detailsView.descriptionLabel.text = event.title
+            detailsView.descriptionLabel.text = event.description
             detailsView.dateLabel.text = DateFormatter.localizedString(from: event.date, dateStyle: .medium, timeStyle: .short)
             detailsView.locationLabel.text = event.location
             

@@ -9,7 +9,6 @@ import UIKit
 
 class EventDetailsView: UIView {
     
-    var backButton: UIButton!
     var eventImageView: UIImageView!
     var titleLabel: UILabel!
     var descriptionLabel: UILabel!
@@ -28,7 +27,6 @@ class EventDetailsView: UIView {
         super.init(frame: frame)
         self.backgroundColor = .white
         
-        setupBackButton()
         setupEventImage()
         setupTitleLabel()
         setupDescriptionLabel()
@@ -43,16 +41,6 @@ class EventDetailsView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupBackButton() {
-        backButton = UIButton()
-        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-        backButton.tintColor = .black
-        backButton.backgroundColor = .white
-        backButton.layer.cornerRadius = 20
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(backButton)
     }
     
     func setupEventImage() {
@@ -161,12 +149,7 @@ class EventDetailsView: UIView {
     
     func initConstraints() {
         NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            backButton.widthAnchor.constraint(equalToConstant: 40),
-            backButton.heightAnchor.constraint(equalToConstant: 40),
-            
-            eventImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            eventImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40),
             eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             eventImageView.heightAnchor.constraint(equalToConstant: 200),
