@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         landingPage.getStartedButton.addTarget(
             self, action: #selector(getStartedTapped), for: .touchUpInside)
 
-        navigationController?.navigationBar.prefersLargeTitles = true
+        //navigationController?.navigationBar.prefersLargeTitles = true
 
         let tapRecognizer = UITapGestureRecognizer(
             target: self, action: #selector(hideKeyboardOnTap))
@@ -44,33 +44,45 @@ class ViewController: UIViewController {
     @objc private func getStartedTapped() {
         // Switch to main screen
         //view = loginView
-        let loginScreen = LoginViewController()
-        navigationController?.pushViewController(loginScreen, animated: true)
-        setupAuthListener()
-    }
+        
+        let loginScreenController = LoginViewController()
+        let navigationController = UINavigationController(rootViewController: loginScreenController)
+        navigationController.setNavigationBarHidden(true, animated: false)
 
-    private func setupAuthListener() {
-        handleAuth = Auth.auth().addStateDidChangeListener { auth, user in
-            if user == nil {
-                self.currentUser = nil
-                //self.mainScreen.labelText.text ="Please sign in to access events."
-                //self.setupRightBarButton(isLoggedin: false)
-            } else {
-                self.currentUser = user
-                //self.mainScreen.labelText.text ="Welcome \(user?.displayName ?? "Anonymous")!"
-                //self.setupRightBarButton(isLoggedin: true)
-            }
+        // Find the active UIWindowScene
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            window.rootViewController = navigationController
+            window.makeKeyAndVisible()
         }
+        
+        //setupAuthListener()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if let handleAuth = handleAuth {
-            Auth.auth().removeStateDidChangeListener(handleAuth)
-        }
-    }
+//    private func setupAuthListener() {
+//        handleAuth = Auth.auth().addStateDidChangeListener { auth, user in
+//            if user == nil {
+//                self.currentUser = nil
+//                //self.mainScreen.labelText.text ="Please sign in to access events."
+//                //self.setupRightBarButton(isLoggedin: false)
+//            } else {
+//                self.currentUser = user
+//                //self.mainScreen.labelText.text ="Welcome \(user?.displayName ?? "Anonymous")!"
+//                //self.setupRightBarButton(isLoggedin: true)
+//            }
+//        }
+//    }
+//
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        //navigationController?.navigationBar.prefersLargeTitles = true
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        //navigationController?.navigationBar.prefersLargeTitles = false
+//        if let handleAuth = handleAuth {
+//            Auth.auth().removeStateDidChangeListener(handleAuth)
+//        }
+//    }
 }

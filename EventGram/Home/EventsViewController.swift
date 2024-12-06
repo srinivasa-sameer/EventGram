@@ -38,26 +38,43 @@ class EventsViewController: UIViewController {
 
         buttonLogout.addTarget(self, action: #selector(onButtonLogoutTapped), for: .touchUpInside)
         let logoutBarButtonItem = UIBarButtonItem(customView: buttonLogout)
+        
+        //MARK: setting the add button to the navigation controller...
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add, target: self,
+            action: #selector(onAddBarButtonTapped)
+        )
                 
         navigationItem.leftBarButtonItem = logoutBarButtonItem
-        
-        
-        
+    }
+    
+    //MARK: On add Bar Button tapped...
+    @objc func onAddBarButtonTapped(){
+        let createEventViewController = CreateEventViewController()
+        createEventViewController.delegate = self
+        navigationController?.pushViewController(createEventViewController, animated: true)
     }
     
     @objc func onButtonLogoutTapped(){
         let logoutAlert = UIAlertController(title: "Logging out!", message: "Are you sure want to log out?",
             preferredStyle: .actionSheet)
         logoutAlert.addAction(UIAlertAction(title: "Yes, log out!", style: .default, handler: {(_) in
-                do{
-                    try Auth.auth().signOut()
-                    let viewController = ViewController()
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }catch{
-                    print("Error occured!")
+            do {
+                try Auth.auth().signOut()
+                let viewController = ViewController()
+                let navigationController = UINavigationController(rootViewController: viewController)
+                navigationController.setNavigationBarHidden(true, animated: false)
+
+                // Find the active UIWindowScene
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   let window = windowScene.windows.first {
+                    window.rootViewController = navigationController
+                    window.makeKeyAndVisible()
                 }
-            })
-        )
+            } catch {
+                print("Error occurred during logout!")
+            }
+        }))
         logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         self.present(logoutAlert, animated: true)
     }
@@ -110,10 +127,19 @@ extension EventsViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        
-//        let event = events[indexPath.row]
-//        // Navigate to event details screen or perform any other action
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // Get the selected event
+        let selectedEvent = events[indexPath.row]
+        
+        // Initialize EventDetailsViewController
+        let eventDetailsVC = EventDetailsViewController()
+        
+        // Pass the selected event data to EventDetailsViewController
+        eventDetailsVC.event = selectedEvent
+        
+        // Push the EventDetailsViewController onto the navigation stack
+        navigationController?.pushViewController(eventDetailsVC, animated: true)
+    }
 }
