@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		420D50902D0284CB0095A7FE /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 420D508F2D0284CB0095A7FE /* AlamofireImage */; };
 		42BFAD742CE72FA100845177 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 42BFAD732CE72FA100845177 /* FirebaseAuth */; };
 		42BFAD762CE72FA100845177 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 42BFAD752CE72FA100845177 /* FirebaseFirestore */; };
 		42BFAD782CE72FA100845177 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 42BFAD772CE72FA100845177 /* FirebaseStorage */; };
@@ -72,6 +73,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42BFAD742CE72FA100845177 /* FirebaseAuth in Frameworks */,
+				420D50902D0284CB0095A7FE /* AlamofireImage in Frameworks */,
 				42BFAD762CE72FA100845177 /* FirebaseFirestore in Frameworks */,
 				42BFAD782CE72FA100845177 /* FirebaseStorage in Frameworks */,
 			);
@@ -137,6 +139,7 @@
 				42BFAD732CE72FA100845177 /* FirebaseAuth */,
 				42BFAD752CE72FA100845177 /* FirebaseFirestore */,
 				42BFAD772CE72FA100845177 /* FirebaseStorage */,
+				420D508F2D0284CB0095A7FE /* AlamofireImage */,
 			);
 			productName = EventGram;
 			productReference = 42BFAD3C2CE72F2D00845177 /* EventGram.app */;
@@ -222,6 +225,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				42BFAD722CE72FA100845177 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				420D508E2D0284CB0095A7FE /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 42BFAD3D2CE72F2D00845177 /* Products */;
@@ -312,6 +316,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -340,6 +345,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -586,6 +592,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		420D508E2D0284CB0095A7FE /* XCRemoteSwiftPackageReference "AlamofireImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/AlamofireImage/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.0;
+			};
+		};
 		42BFAD722CE72FA100845177 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -597,6 +611,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		420D508F2D0284CB0095A7FE /* AlamofireImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 420D508E2D0284CB0095A7FE /* XCRemoteSwiftPackageReference "AlamofireImage" */;
+			productName = AlamofireImage;
+		};
 		42BFAD732CE72FA100845177 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 42BFAD722CE72FA100845177 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
