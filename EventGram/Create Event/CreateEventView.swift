@@ -40,8 +40,9 @@ class CreateEventView: UIView {
         setupTimeFields()
         setupDateField()
         setupCreateEventButton()
-        initConstraints()
+        setupConstraints()
     }
+
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -58,14 +59,6 @@ class CreateEventView: UIView {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
     }
-
-//    func setupBackButton() {
-//        backButton = UIButton()
-//        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-//        backButton.tintColor = .black
-//        backButton.translatesAutoresizingMaskIntoConstraints = false
-//        contentView.addSubview(backButton)
-//    }
 
     func setupTitleLabel() {
         titleLabel = UILabel()
@@ -181,117 +174,77 @@ class CreateEventView: UIView {
         contentView.addSubview(createEventButton)
     }
 
-    func initConstraints() {
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             // ScrollView constraints
-            scrollView.topAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            scrollView.bottomAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.bottomAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
 
             // Content view constraints
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(
-                equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(
-                equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(
-                equalTo: scrollView.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
-//            // Back button
-//            backButton.topAnchor.constraint(
-//                equalTo: contentView.topAnchor, constant: 12),
-//            backButton.leadingAnchor.constraint(
-//                equalTo: contentView.leadingAnchor, constant: 16),
+            // Title label
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
 
-            // Title
-            titleLabel.topAnchor.constraint(
-                equalTo: contentView.bottomAnchor, constant: 20),
-            titleLabel.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor, constant: 20),
+            // Subtitle label
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
 
-            // Subtitle
-            subtitleLabel.topAnchor.constraint(
-                equalTo: titleLabel.bottomAnchor, constant: 8),
-            subtitleLabel.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor, constant: 20),
-
-            // Event Title TextField
-            eventTitleTextField.topAnchor.constraint(
-                equalTo: subtitleLabel.bottomAnchor, constant: 20),
-            eventTitleTextField.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor, constant: 20),
-            eventTitleTextField.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor, constant: -20),
+            // Event title text field
+            eventTitleTextField.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 16),
+            eventTitleTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            eventTitleTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             eventTitleTextField.heightAnchor.constraint(equalToConstant: 50),
 
-            // Description TextView
-            eventDescriptionTextView.topAnchor.constraint(
-                equalTo: eventTitleTextField.bottomAnchor, constant: 16),
-            eventDescriptionTextView.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor, constant: 20),
-            eventDescriptionTextView.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor, constant: -20),
-            eventDescriptionTextView.heightAnchor.constraint(
-                equalToConstant: 100),
+            // Event description view
+            eventDescriptionTextView.topAnchor.constraint(equalTo: eventTitleTextField.bottomAnchor, constant: 16),
+            eventDescriptionTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            eventDescriptionTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            eventDescriptionTextView.heightAnchor.constraint(equalToConstant: 100),
 
-            // Upload Banner View
-            uploadBannerView.topAnchor.constraint(
-                equalTo: eventDescriptionTextView.bottomAnchor, constant: 16),
-            uploadBannerView.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor, constant: 20),
-            uploadBannerView.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor, constant: -20),
+            // Upload banner view
+            uploadBannerView.topAnchor.constraint(equalTo: eventDescriptionTextView.bottomAnchor, constant: 16),
+            uploadBannerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            uploadBannerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             uploadBannerView.heightAnchor.constraint(equalToConstant: 150),
 
-            // Address TextField
-            addressTextField.topAnchor.constraint(
-                equalTo: uploadBannerView.bottomAnchor, constant: 16),
-            addressTextField.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor, constant: 20),
-            addressTextField.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor, constant: -20),
+            // Address field
+            addressTextField.topAnchor.constraint(equalTo: uploadBannerView.bottomAnchor, constant: 16),
+            addressTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            addressTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             addressTextField.heightAnchor.constraint(equalToConstant: 50),
 
-            // Time Fields
-            startTimeTextField.topAnchor.constraint(
-                equalTo: addressTextField.bottomAnchor, constant: 16),
-            startTimeTextField.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor, constant: 20),
-            startTimeTextField.widthAnchor.constraint(
-                equalTo: contentView.widthAnchor, multiplier: 0.4),
+            // Start time field
+            startTimeTextField.topAnchor.constraint(equalTo: addressTextField.bottomAnchor, constant: 16),
+            startTimeTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            startTimeTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.45),
             startTimeTextField.heightAnchor.constraint(equalToConstant: 50),
 
-            endTimeTextField.topAnchor.constraint(
-                equalTo: addressTextField.bottomAnchor, constant: 16),
-            endTimeTextField.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor, constant: -20),
-            endTimeTextField.widthAnchor.constraint(
-                equalTo: contentView.widthAnchor, multiplier: 0.4),
+            // End time field
+            endTimeTextField.topAnchor.constraint(equalTo: addressTextField.bottomAnchor, constant: 16),
+            endTimeTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            endTimeTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.45),
             endTimeTextField.heightAnchor.constraint(equalToConstant: 50),
 
-            // Date Field
-            startDateTextField.topAnchor.constraint(
-                equalTo: startTimeTextField.bottomAnchor, constant: 16),
-            startDateTextField.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor, constant: 20),
-            startDateTextField.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor, constant: -20),
+            // Start date field
+            startDateTextField.topAnchor.constraint(equalTo: startTimeTextField.bottomAnchor, constant: 16),
+            startDateTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            startDateTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             startDateTextField.heightAnchor.constraint(equalToConstant: 50),
 
-            // Create Event Button
-            createEventButton.topAnchor.constraint(
-                equalTo: startDateTextField.bottomAnchor, constant: 32),
-            createEventButton.leadingAnchor.constraint(
-                equalTo: contentView.leadingAnchor, constant: 20),
-            createEventButton.trailingAnchor.constraint(
-                equalTo: contentView.trailingAnchor, constant: -20),
+            // Create event button
+            createEventButton.topAnchor.constraint(equalTo: startDateTextField.bottomAnchor, constant: 32),
+            createEventButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            createEventButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             createEventButton.heightAnchor.constraint(equalToConstant: 50),
-            createEventButton.bottomAnchor.constraint(
-                equalTo: contentView.bottomAnchor, constant: -20),
+            createEventButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
         ])
     }
 }
