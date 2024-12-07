@@ -218,19 +218,21 @@ extension CreateEventViewController {
 
         return date
     }
-
-    func saveEvent(
-        title: String, description: String, address: String,
-        startTime: String, endTime: String, startDate: String,
-        imageUrl: String?
-    ) {
+    
+    func saveEvent(title: String, description: String, address: String,
+                  startTime: String, endTime: String, startDate: String,
+                  imageUrl: String?) {
+        
+        let eventId = UUID().uuidString
         showActivityIndicator()
+
         guard let convertedDate = convertDateString(startDate) else {
             showAlert(title: "Error", message: "Invalid date format")
             return
         }
 
         var event: [String: Any] = [
+            "eventId": eventId,
             "title": title,
             "description": description,
             "location": address,
