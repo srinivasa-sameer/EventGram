@@ -137,17 +137,18 @@ extension CreateEventViewController {
             return
         }
         
+        
         if let image = selectedImage {
             uploadImage(image) { [weak self] imageUrl in
                 self?.saveEvent(title: title, description: description,
                               address: address, startTime: startTime,
-                              endTime: endTime, startDate: startDate,
+                                endTime: endTime, startDate: startDate,
                               imageUrl: imageUrl)
             }
         } else {
             saveEvent(title: title, description: description,
                      address: address, startTime: startTime,
-                     endTime: endTime, startDate: startDate,
+                      endTime: endTime, startDate: startDate,
                      imageUrl: nil)
         }
     }
@@ -174,16 +175,34 @@ extension CreateEventViewController {
         }
     }
     
+    func convertDateString(_ dateString: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        guard let date = dateFormatter.date(from: dateString) else {
+            return nil
+        }
+        
+        return date
+    }
+    
     func saveEvent(title: String, description: String, address: String,
                   startTime: String, endTime: String, startDate: String,
                   imageUrl: String?) {
+        
+        guard let convertedDate = convertDateString(startDate) else {
+                showAlert(title: "Error", message: "Invalid date format")
+                return
+            }
+        
         var event: [String: Any] = [
             "title": title,
             "description": description,
-            "address": address,
+            "location": address,
             "startTime": startTime,
             "endTime": endTime,
-            "startDate": startDate,
+            "date": convertedDate,
             "timestamp": Timestamp(date: Date())
         ]
         
