@@ -28,7 +28,8 @@ class EventDetailsViewController: UIViewController {
             detailsView.descriptionLabel.text = event.description
             detailsView.dateLabel.text = DateFormatter.localizedString(from: event.date, dateStyle: .medium, timeStyle: .short)
             detailsView.locationLabel.text = event.location
-            detailsView.attendingLabel.text = event.eventId
+            detailsView.organizerLabel.text = "Hosted By \(event.eventId)"
+            detailsView.attendingLabel.text = "\(event.title) Attending"
             
             if let imageUrl = event.imageUrl, let url = URL(string: imageUrl) {
                 detailsView.eventImageView.af.setImage(withURL: url, placeholderImage: UIImage(systemName: "photo"))
@@ -153,7 +154,7 @@ class EventDetailsViewController: UIViewController {
                 // Update button immediately to "Book Ticket"
                 DispatchQueue.main.async {
                     self?.detailsView.bookTicketButton.setTitle("Book Ticket", for: .normal)
-                    self?.detailsView.bookTicketButton.backgroundColor = .systemBlue
+                    self?.detailsView.bookTicketButton.backgroundColor = UIColor(red: 190/255, green: 40/255, blue: 60/255, alpha: 1.0)
                     self?.detailsView.bookTicketButton.removeTarget(nil, action: nil, for: .allEvents)
                     self?.detailsView.bookTicketButton.addTarget(
                         self, action: #selector(self?.onBookTicketTapped), for: .touchUpInside)

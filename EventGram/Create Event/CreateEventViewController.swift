@@ -256,6 +256,7 @@ extension CreateEventViewController {
             } else {
                 //                self?.showAlert(title: "Success", message: "Event created successfully!")
                 //                self?.navigationController?.popViewController(animated: true)
+                self?.hideActivityIndicator()
                 let successVC = EventSuccessViewController()
                 successVC.eventTitle = title
                 successVC.eventDate = startDate

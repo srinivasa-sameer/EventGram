@@ -139,13 +139,11 @@ class EventDetailsView: UIView {
             
             organizerLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
             organizerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            organizerLabel.heightAnchor.constraint(equalToConstant: 24),
-            organizerLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            organizerLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
             attendingLabel.topAnchor.constraint(equalTo: organizerLabel.bottomAnchor, constant: 16),
             attendingLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            attendingLabel.heightAnchor.constraint(equalToConstant: 32),
-            attendingLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            attendingLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
             dateIcon.topAnchor.constraint(equalTo: attendingLabel.bottomAnchor, constant: 16),
             dateIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
