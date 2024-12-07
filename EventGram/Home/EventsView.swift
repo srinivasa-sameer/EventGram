@@ -11,6 +11,7 @@ import AlamofireImage
 class EventsView: UIView {
         
     var tableViewEvents: UITableView!
+    var titleLabel: UILabel!
     
     override init(frame: CGRect) {
             super.init(frame: frame)
@@ -18,7 +19,16 @@ class EventsView: UIView {
             
             //MARK: initializing a TableView...
             setupTableViewEvents()
+            setupTitleLabel()
             initConstraints()
+    }
+    
+    func setupTitleLabel(){
+        titleLabel = UILabel()
+        titleLabel.text = "Events @ Northeastern University"
+        titleLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(titleLabel)
     }
     
     func setupTableViewEvents(){
@@ -31,7 +41,11 @@ class EventsView: UIView {
     //MARK: setting the constraints...
     func initConstraints(){
         NSLayoutConstraint.activate([
-            tableViewEvents.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 32),
+            
+            titleLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            
+            tableViewEvents.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 26),
             tableViewEvents.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -8),
             tableViewEvents.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 8),
             tableViewEvents.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -8),

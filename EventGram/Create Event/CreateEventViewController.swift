@@ -64,7 +64,7 @@ class CreateEventViewController: UIViewController {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
-        createEventScreen.startDateTextField.inputView = datePicker
+        createEventScreen.dateTextField.inputView = datePicker
         datePicker.addTarget(
             self, action: #selector(dateChanged(_:)), for: .valueChanged)
 
@@ -99,7 +99,7 @@ class CreateEventViewController: UIViewController {
     @objc func dateChanged(_ sender: UIDatePicker) {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd, yyyy"
-        createEventScreen.startDateTextField.text = formatter.string(
+        createEventScreen.dateTextField.text = formatter.string(
             from: sender.date)
     }
 
@@ -150,7 +150,7 @@ extension CreateEventViewController {
     @objc func createEventButtonTapped() {
         guard let title = createEventScreen.eventTitleTextField.text,
             !title.isEmpty,
-            let description = createEventScreen.eventDescriptionTextView.text,
+              let description = createEventScreen.eventDescriptionField.text,
             !description.isEmpty,
             let address = createEventScreen.addressTextField.text,
             !address.isEmpty,
@@ -158,7 +158,7 @@ extension CreateEventViewController {
             !startTime.isEmpty,
             let endTime = createEventScreen.endTimeTextField.text,
             !endTime.isEmpty,
-            let startDate = createEventScreen.startDateTextField.text,
+            let startDate = createEventScreen.dateTextField.text,
             !startDate.isEmpty
         else {
             showAlert(

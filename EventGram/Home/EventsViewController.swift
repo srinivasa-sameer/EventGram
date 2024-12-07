@@ -17,14 +17,12 @@ class EventsViewController: UIViewController {
     
     override func loadView() {
         view = mainScreen
+        
         self.navigationItem.setHidesBackButton(true, animated:true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //createSampleEvents()
-        
-        title = "Upcoming Events"
         mainScreen.tableViewEvents.dataSource = self
         mainScreen.tableViewEvents.delegate = self
         mainScreen.tableViewEvents.separatorStyle = .none
@@ -37,10 +35,10 @@ class EventsViewController: UIViewController {
         let logoutBarButtonItem = UIBarButtonItem(customView: buttonLogout)
         
         //MARK: setting the add button to the navigation controller...
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .add, target: self,
-            action: #selector(onAddBarButtonTapped)
-        )
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(
+//            barButtonSystemItem: .add, target: self,
+//            action: #selector(onAddBarButtonTapped)
+//        )
                 
         navigationItem.leftBarButtonItem = logoutBarButtonItem
     }
@@ -51,11 +49,11 @@ class EventsViewController: UIViewController {
     }
     
     //MARK: On add Bar Button tapped...
-    @objc func onAddBarButtonTapped(){
-        let createEventViewController = CreateEventViewController()
-        createEventViewController.delegate = self
-        navigationController?.pushViewController(createEventViewController, animated: true)
-    }
+//    @objc func onAddBarButtonTapped(){
+//        let createEventViewController = CreateEventViewController()
+//        createEventViewController.delegate = self
+//        navigationController?.pushViewController(createEventViewController, animated: true)
+//    }
     
     @objc func onButtonLogoutTapped(){
         let logoutAlert = UIAlertController(title: "Logging out!", message: "Are you sure want to log out?",

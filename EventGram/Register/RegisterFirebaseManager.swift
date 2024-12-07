@@ -56,6 +56,51 @@ extension RegisterViewController {
                 return
             }
 
+            // Create Tab Bar Controller
+            let tabBarController = UITabBarController()
+
+            // Home Tab
+            let eventsVC = EventsViewController()
+            let eventsNav = UINavigationController(
+                rootViewController: eventsVC)
+            eventsNav.tabBarItem = UITabBarItem(
+                title: "Home",
+                image: UIImage(systemName: "house"),
+                selectedImage: UIImage(systemName: "house.fill")
+            )
+
+            // Create Event Tab
+            let createEventVC = CreateEventViewController()
+            let createEventNav = UINavigationController(
+                rootViewController: createEventVC)
+            createEventNav.tabBarItem = UITabBarItem(
+                title: "Create",
+                image: UIImage(systemName: "plus.circle"),
+                selectedImage: UIImage(systemName: "plus.circle.fill")
+            )
+
+            // Profile Tab
+            let profileVC = ProfileViewController()
+            let profileNav = UINavigationController(
+                rootViewController: profileVC)
+            profileNav.tabBarItem = UITabBarItem(
+                title: "Profile",
+                image: UIImage(systemName: "person"),
+                selectedImage: UIImage(systemName: "person.fill")
+            )
+
+            // Setup Tab Bar
+            tabBarController.viewControllers = [
+                eventsNav, createEventNav, profileNav,
+            ]
+            tabBarController.tabBar.tintColor = UIColor(
+                red: 190 / 255, green: 40 / 255, blue: 60 / 255, alpha: 1.0)
+            tabBarController.tabBar.backgroundColor = .white
+
+            // Present Tab Bar Controller
+            tabBarController.modalPresentationStyle = .fullScreen
+            self.present(tabBarController, animated: true)
+
             if let uid = result?.user.uid {
                 let fullName = "\(firstName) \(lastName)"
                 // Set display name and add user to Firestore

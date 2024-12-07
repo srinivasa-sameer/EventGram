@@ -24,21 +24,12 @@ class EventSuccessViewController: UIViewController {
         successScreen.eventDateLabel.text = eventDate
         
         successScreen.goToEventsButton.addTarget(self, action: #selector(goToEventsTapped), for: .touchUpInside)
-        successScreen.viewDetailsButton.addTarget(self, action: #selector(viewDetailsTapped), for: .touchUpInside)
     }
     
     @objc func goToEventsTapped() {
         dismiss(animated: true) { [weak self] in
-            let profileViewController = ProfileViewController()
-            self?.navigationController?.pushViewController(profileViewController, animated: true)
+            let eventsViewController = EventsViewController()
+            self?.navigationController?.pushViewController(eventsViewController, animated: true)
         }
-    }
-    
-    @objc func viewDetailsTapped() {
-        // Navigate to event details
-        let eventsViewController = EventsViewController()
-        // Set event details here
-        navigationController?.pushViewController(eventsViewController, animated: true)
-        print("Tapped")
     }
 }

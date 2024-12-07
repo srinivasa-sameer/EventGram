@@ -14,7 +14,7 @@ class CreateEventView: UIView {
     var titleLabel: UILabel!
     var subtitleLabel: UILabel!
     var eventTitleTextField: UITextField!
-    var eventDescriptionTextView: UITextView!
+    var eventDescriptionField: UITextField!
     var uploadBannerView: UIView!
     var uploadImageIcon: UIImageView!
     var uploadBannerButton: UIButton!
@@ -22,7 +22,7 @@ class CreateEventView: UIView {
     var addressTextField: UITextField!
     var startTimeTextField: UITextField!
     var endTimeTextField: UITextField!
-    var startDateTextField: UITextField!
+    var dateTextField: UITextField!
     var createEventButton: UIButton!
     
     override init(frame: CGRect) {
@@ -34,7 +34,7 @@ class CreateEventView: UIView {
         setupTitleLabel()
         setupSubtitleLabel()
         setupEventTitleField()
-        setupEventDescriptionView()
+        setupEventDescriptionField()
         setupUploadBannerSection()
         setupAddressField()
         setupTimeFields()
@@ -84,16 +84,12 @@ class CreateEventView: UIView {
         contentView.addSubview(eventTitleTextField)
     }
     
-    func setupEventDescriptionView() {
-        eventDescriptionTextView = UITextView()
-        eventDescriptionTextView.text = "Describe your event *"
-        eventDescriptionTextView.textColor = .lightGray
-        eventDescriptionTextView.font = .systemFont(ofSize: 16)
-        eventDescriptionTextView.layer.borderWidth = 0.5
-        eventDescriptionTextView.layer.borderColor = UIColor.systemGray4.cgColor
-        eventDescriptionTextView.layer.cornerRadius = 8
-        eventDescriptionTextView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(eventDescriptionTextView)
+    func setupEventDescriptionField() {
+        eventDescriptionField = UITextField()
+        eventDescriptionField.placeholder = "Describe your event *"
+        eventDescriptionField.borderStyle = .roundedRect
+        eventDescriptionField.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(eventDescriptionField)
     }
     
     func setupUploadBannerSection() {
@@ -127,7 +123,7 @@ class CreateEventView: UIView {
     
     func setupAddressField() {
         addressTextField = UITextField()
-        addressTextField.placeholder = "Enter Address *"
+        addressTextField.placeholder = "Enter Location *"
         addressTextField.borderStyle = .roundedRect
         addressTextField.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(addressTextField)
@@ -153,11 +149,13 @@ class CreateEventView: UIView {
     }
     
     func setupDateField() {
-        startDateTextField = UITextField()
-        startDateTextField.placeholder = "Start date *"
-        startDateTextField.borderStyle = .roundedRect
-        startDateTextField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(startDateTextField)
+        dateTextField = UITextField()
+        dateTextField.placeholder = "Event Date *"
+        dateTextField.borderStyle = .roundedRect
+        dateTextField.rightView = UIImageView(image: UIImage(systemName: "calendar"))
+        dateTextField.rightViewMode = .always
+        dateTextField.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(dateTextField)
     }
     
     func setupCreateEventButton() {
@@ -182,7 +180,7 @@ class CreateEventView: UIView {
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
@@ -193,12 +191,12 @@ class CreateEventView: UIView {
             eventTitleTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             eventTitleTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            eventDescriptionTextView.topAnchor.constraint(equalTo: eventTitleTextField.bottomAnchor, constant: 16),
-            eventDescriptionTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            eventDescriptionTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            eventDescriptionTextView.heightAnchor.constraint(equalToConstant: 100),
+            eventDescriptionField.topAnchor.constraint(equalTo: eventTitleTextField.bottomAnchor, constant: 16),
+            eventDescriptionField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            eventDescriptionField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            eventDescriptionField.heightAnchor.constraint(equalToConstant: 100),
             
-            uploadBannerView.topAnchor.constraint(equalTo: eventDescriptionTextView.bottomAnchor, constant: 16),
+            uploadBannerView.topAnchor.constraint(equalTo: eventDescriptionField.bottomAnchor, constant: 16),
             uploadBannerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             uploadBannerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             uploadBannerView.heightAnchor.constraint(equalToConstant: 150),
@@ -229,12 +227,12 @@ class CreateEventView: UIView {
             endTimeTextField.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.4),
             endTimeTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            startDateTextField.topAnchor.constraint(equalTo: startTimeTextField.bottomAnchor, constant: 16),
-            startDateTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            startDateTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            startDateTextField.heightAnchor.constraint(equalToConstant: 50),
+            dateTextField.topAnchor.constraint(equalTo: startTimeTextField.bottomAnchor, constant: 16),
+            dateTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            dateTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            dateTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            createEventButton.topAnchor.constraint(equalTo: startDateTextField.bottomAnchor, constant: 32),
+            createEventButton.topAnchor.constraint(equalTo: dateTextField.bottomAnchor, constant: 26),
             createEventButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             createEventButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             createEventButton.heightAnchor.constraint(equalToConstant: 50),

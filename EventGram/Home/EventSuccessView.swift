@@ -14,7 +14,6 @@ class EventSuccessView: UIView {
     var eventDateLabel: UILabel!
     var infoLabel: UILabel!
     var goToEventsButton: UIButton!
-    var viewDetailsButton: UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -87,15 +86,7 @@ class EventSuccessView: UIView {
         goToEventsButton.layer.cornerRadius = 25
         goToEventsButton.translatesAutoresizingMaskIntoConstraints = false
         
-        viewDetailsButton = UIButton()
-        viewDetailsButton.setTitle("View event details", for: .normal)
-        viewDetailsButton.setTitleColor(.black, for: .normal)
-        viewDetailsButton.backgroundColor = .systemGray6
-        viewDetailsButton.layer.cornerRadius = 25
-        viewDetailsButton.translatesAutoresizingMaskIntoConstraints = false
-        
         self.addSubview(goToEventsButton)
-        self.addSubview(viewDetailsButton)
     }
     
     func initConstraints() {
@@ -121,15 +112,11 @@ class EventSuccessView: UIView {
             infoLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             infoLabel.bottomAnchor.constraint(equalTo: goToEventsButton.topAnchor, constant: -40),
             
-            goToEventsButton.bottomAnchor.constraint(equalTo: viewDetailsButton.topAnchor, constant: -16),
+            goToEventsButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
             goToEventsButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             goToEventsButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             goToEventsButton.heightAnchor.constraint(equalToConstant: 50),
             
-            viewDetailsButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            viewDetailsButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            viewDetailsButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            viewDetailsButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

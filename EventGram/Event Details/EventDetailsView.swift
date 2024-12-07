@@ -12,15 +12,12 @@ class EventDetailsView: UIView {
     var eventImageView: UIImageView!
     var titleLabel: UILabel!
     var descriptionLabel: UILabel!
-    var organizerIcon: UIImageView!
     var organizerLabel: UILabel!
-    var attendeesStackView: UIStackView!
     var attendingLabel: UILabel!
     var dateIcon: UIImageView!
     var dateLabel: UILabel!
     var locationIcon: UIImageView!
     var locationLabel: UILabel!
-    var otherInfoLabel: UILabel!
     var bookTicketButton: UIButton!
     
     override init(frame: CGRect) {
@@ -34,7 +31,6 @@ class EventDetailsView: UIView {
         setupAttendees()
         setupDateSection()
         setupLocationSection()
-        setupOtherInfo()
         setupBookTicketButton()
         initConstraints()
     }
@@ -71,32 +67,18 @@ class EventDetailsView: UIView {
     }
     
     func setupOrganizer() {
-        organizerIcon = UIImageView()
-        organizerIcon.image = UIImage(named: "apmc_logo")
-        organizerIcon.contentMode = .scaleAspectFit
-        organizerIcon.translatesAutoresizingMaskIntoConstraints = false
-        
         organizerLabel = UILabel()
         organizerLabel.text = "Hosted by APMC"
         organizerLabel.font = .systemFont(ofSize: 16)
         organizerLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.addSubview(organizerIcon)
         self.addSubview(organizerLabel)
     }
     
     func setupAttendees() {
-        attendeesStackView = UIStackView()
-        attendeesStackView.axis = .horizontal
-        attendeesStackView.spacing = -10
-        attendeesStackView.translatesAutoresizingMaskIntoConstraints = false
-        
         attendingLabel = UILabel()
         attendingLabel.text = "Attending"
         attendingLabel.font = .systemFont(ofSize: 16)
         attendingLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.addSubview(attendeesStackView)
         self.addSubview(attendingLabel)
     }
     
@@ -130,13 +112,6 @@ class EventDetailsView: UIView {
         self.addSubview(locationLabel)
     }
     
-    func setupOtherInfo() {
-        otherInfoLabel = UILabel()
-        otherInfoLabel.text = "Other Information"
-        otherInfoLabel.font = .systemFont(ofSize: 20, weight: .bold)
-        otherInfoLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(otherInfoLabel)
-    }
     
     func setupBookTicketButton() {
         bookTicketButton = UIButton()
@@ -149,7 +124,7 @@ class EventDetailsView: UIView {
     
     func initConstraints() {
         NSLayoutConstraint.activate([
-            eventImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40),
+            eventImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
             eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             eventImageView.heightAnchor.constraint(equalToConstant: 200),
@@ -162,22 +137,17 @@ class EventDetailsView: UIView {
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            organizerIcon.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            organizerIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            organizerIcon.widthAnchor.constraint(equalToConstant: 24),
-            organizerIcon.heightAnchor.constraint(equalToConstant: 24),
+            organizerLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
+            organizerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            organizerLabel.heightAnchor.constraint(equalToConstant: 24),
+            organizerLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            organizerLabel.centerYAnchor.constraint(equalTo: organizerIcon.centerYAnchor),
-            organizerLabel.leadingAnchor.constraint(equalTo: organizerIcon.trailingAnchor, constant: 8),
+            attendingLabel.topAnchor.constraint(equalTo: organizerLabel.bottomAnchor, constant: 16),
+            attendingLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            attendingLabel.heightAnchor.constraint(equalToConstant: 32),
+            attendingLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            attendeesStackView.topAnchor.constraint(equalTo: organizerIcon.bottomAnchor, constant: 16),
-            attendeesStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            attendeesStackView.heightAnchor.constraint(equalToConstant: 32),
-            
-            attendingLabel.centerYAnchor.constraint(equalTo: attendeesStackView.centerYAnchor),
-            attendingLabel.leadingAnchor.constraint(equalTo: attendeesStackView.trailingAnchor, constant: 16),
-            
-            dateIcon.topAnchor.constraint(equalTo: attendeesStackView.bottomAnchor, constant: 16),
+            dateIcon.topAnchor.constraint(equalTo: attendingLabel.bottomAnchor, constant: 16),
             dateIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             dateIcon.widthAnchor.constraint(equalToConstant: 24),
             dateIcon.heightAnchor.constraint(equalToConstant: 24),
@@ -192,9 +162,6 @@ class EventDetailsView: UIView {
             
             locationLabel.centerYAnchor.constraint(equalTo: locationIcon.centerYAnchor),
             locationLabel.leadingAnchor.constraint(equalTo: locationIcon.trailingAnchor, constant: 8),
-            
-            otherInfoLabel.topAnchor.constraint(equalTo: locationIcon.bottomAnchor, constant: 24),
-            otherInfoLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             
             bookTicketButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
             bookTicketButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
