@@ -24,3 +24,4 @@ struct Event {
         self.imageUrl = dictionary["imageUrl"] as? String
     }
 }
+
