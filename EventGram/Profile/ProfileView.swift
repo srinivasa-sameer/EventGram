@@ -8,13 +8,77 @@
 import UIKit
 
 class ProfileView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    var profileImageView: UIImageView!
+    var nameLabel: UILabel!
+    var myEventsLabel: UILabel!
+    var eventsTableView: UITableView!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .white
+        
+        setupProfileImage()
+        setupNameLabel()
+        setupMyEventsLabel()
+        setupTableView()
+        initConstraints()
     }
-    */
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupProfileImage() {
+        profileImageView = UIImageView()
+        profileImageView.image = UIImage(systemName: "person.circle.fill")
+        profileImageView.tintColor = .lightGray
+        profileImageView.contentMode = .scaleAspectFit
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(profileImageView)
+    }
+    
+    func setupNameLabel() {
+        nameLabel = UILabel()
+        nameLabel.text = "Name"
+        nameLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        nameLabel.textAlignment = .center
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(nameLabel)
+    }
+    
+    func setupMyEventsLabel() {
+        myEventsLabel = UILabel()
+        myEventsLabel.text = "My Events"
+        myEventsLabel.font = .systemFont(ofSize: 22, weight: .bold)
+        myEventsLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(myEventsLabel)
+    }
+    
+    func setupTableView() {
+        eventsTableView = UITableView()
+        eventsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "eventCell")
+        eventsTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(eventsTableView)
+    }
+    
+    func initConstraints() {
+        NSLayoutConstraint.activate([
+            profileImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            profileImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            profileImageView.widthAnchor.constraint(equalToConstant: 100),
+            profileImageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            nameLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 16),
+            nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            myEventsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 32),
+            myEventsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            
+            eventsTableView.topAnchor.constraint(equalTo: myEventsLabel.bottomAnchor, constant: 16),
+            eventsTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            eventsTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            eventsTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
 }

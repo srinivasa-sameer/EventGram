@@ -8,8 +8,10 @@
 import Foundation
 import UIKit
 import FirebaseCore
+import FirebaseFirestore
  
-struct Event {
+struct Event:Codable {
+    @DocumentID var eventId: String?
     let title: String
     let description: String
     let location: String
