@@ -191,12 +191,14 @@ extension CreateEventViewController {
                   startTime: String, endTime: String, startDate: String,
                   imageUrl: String?) {
         
+        let eventId = UUID().uuidString
         guard let convertedDate = convertDateString(startDate) else {
                 showAlert(title: "Error", message: "Invalid date format")
                 return
             }
         
         var event: [String: Any] = [
+            "eventId": eventId,
             "title": title,
             "description": description,
             "location": address,

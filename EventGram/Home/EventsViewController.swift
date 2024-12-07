@@ -29,7 +29,7 @@ class EventsViewController: UIViewController {
         mainScreen.tableViewEvents.delegate = self
         mainScreen.tableViewEvents.separatorStyle = .none
         
-        fetchUpcomingEvents()
+        //fetchUpcomingEvents()
         
         
         let buttonLogout = UIButton(type: .system)
@@ -46,6 +46,11 @@ class EventsViewController: UIViewController {
         )
                 
         navigationItem.leftBarButtonItem = logoutBarButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchUpcomingEvents()
     }
     
     //MARK: On add Bar Button tapped...

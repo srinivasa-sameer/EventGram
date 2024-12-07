@@ -10,6 +10,7 @@ import UIKit
 import FirebaseCore
  
 struct Event {
+    let eventId: String
     let title: String
     let description: String
     let location: String
@@ -17,6 +18,7 @@ struct Event {
     let imageUrl: String?
     
     init(dictionary: [String: Any]) {
+        self.eventId = dictionary["eventId"] as? String ?? UUID().uuidString
         self.title = dictionary["title"] as? String ?? ""
         self.description = dictionary["description"] as? String ?? ""
         self.location = dictionary["location"] as? String ?? ""

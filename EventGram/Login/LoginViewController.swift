@@ -65,10 +65,6 @@ class LoginViewController: UIViewController {
                     return
                 }
 
-                // Navigate to main screen on success
-                //                if let welcomeScreen = self?.navigationController?.viewControllers.first {
-                //                    self?.navigationController?.popToViewController(welcomeScreen, animated: true)
-                //                }
                 let eventViewController = EventsViewController()
                 let navigationController = UINavigationController(
                     rootViewController: eventViewController)
