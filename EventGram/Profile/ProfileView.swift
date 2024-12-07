@@ -11,6 +11,7 @@ class ProfileView: UIView {
     
     var profileImageView: UIImageView!
     var nameLabel: UILabel!
+    var universityLabel: UILabel!
     var myEventsLabel: UILabel!
     var eventsTableView: UITableView!
     
@@ -20,6 +21,7 @@ class ProfileView: UIView {
         
         setupProfileImage()
         setupNameLabel()
+        setupUniversityLabel()
         setupMyEventsLabel()
         setupTableView()
         initConstraints()
@@ -47,6 +49,14 @@ class ProfileView: UIView {
         self.addSubview(nameLabel)
     }
     
+    func setupUniversityLabel() {
+        universityLabel = UILabel()
+        universityLabel.text = "University"
+        universityLabel.font = .systemFont(ofSize: 22, weight: .bold)
+        universityLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(universityLabel)
+    }
+    
     func setupMyEventsLabel() {
         myEventsLabel = UILabel()
         myEventsLabel.text = "My Events"
@@ -72,7 +82,10 @@ class ProfileView: UIView {
             nameLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 16),
             nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            myEventsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 32),
+            universityLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+            universityLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            myEventsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 50),
             myEventsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             
             eventsTableView.topAnchor.constraint(equalTo: myEventsLabel.bottomAnchor, constant: 16),
