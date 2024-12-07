@@ -29,9 +29,6 @@ class EventsViewController: UIViewController {
         mainScreen.tableViewEvents.delegate = self
         mainScreen.tableViewEvents.separatorStyle = .none
         
-        //fetchUpcomingEvents()
-        
-        
         let buttonLogout = UIButton(type: .system)
         buttonLogout.setTitle("Logout", for: .normal)
         buttonLogout.titleLabel?.font = .boldSystemFont(ofSize: 16)

@@ -8,7 +8,9 @@
 import Foundation
 import UIKit
 import FirebaseCore
+import FirebaseFirestore
  
+
 struct Event {
     let eventId: String
     let title: String

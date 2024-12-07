@@ -19,7 +19,7 @@ class ProgressSpinnerViewController: UIViewController {
 
     private func setupActivityIndicator() {
         activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = .orange
+        activityIndicator.color = UIColor(red: 190/255, green: 40/255, blue: 60/255, alpha: 1.0)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
         
