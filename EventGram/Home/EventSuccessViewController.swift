@@ -28,7 +28,23 @@ class EventSuccessViewController: UIViewController {
     }
 
     @objc func goToEventsTapped() {
-            let eventsViewController = EventsViewController()
-        let navigationController = UINavigationController(rootViewController: eventsViewController)
+        guard let navigationController = self.navigationController else {
+                return
         }
+        
+        // Find the EventsViewController in the navigation stack
+        for viewController in navigationController.viewControllers {
+            if let eventsVC = viewController as? EventsViewController {
+                navigationController.popToViewController(eventsVC, animated: true)
+                return
+            }
+        }
+        
+        // If not found, create a new one and set it
+        let eventsViewController = EventsViewController()
+        navigationController.setViewControllers([eventsViewController], animated: true)
+
+    }
+
+
 }

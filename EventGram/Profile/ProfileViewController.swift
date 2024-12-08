@@ -54,26 +54,80 @@ class ProfileViewController: UIViewController {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(user.uid)
         
+        
         userRef.getDocument { [weak self] document, error in
             if let error = error {
                 self?.showAlert(message: "Failed to fetch user data: \(error.localizedDescription)")
                 return
             }
             
-            if let document = document, let data = document.data() {
+            if let document = document, let data = document.data(), let userRole = data["role"] as? String{
                 // Populate profile data
                 DispatchQueue.main.async {
                     self?.profileScreen.nameLabel.text = data["name"] as? String ?? "Name not available"
                     self?.profileScreen.universityLabel.text = data["university"] as? String ?? "University not available"
                 }
                 
-                // Fetch registered events
-                if let registeredEventIds = data["registeredEvents"] as? [String] {
-                    self?.fetchRegisteredEvents(eventIds: registeredEventIds)
-                }
+                self?.fetchEventsBasedOnRole(userRole: userRole)
             }
         }
     }
+    
+    func fetchEventsBasedOnRole(userRole:String) {
+        
+        if userRole == "Student" {
+            fetchStudentEvents()
+        } else if userRole == "Club Admin" {
+            fetchAdminEvents()
+        } else {
+            showAlert(message: "Invalid user role.")
+        }
+    }
+    
+    func fetchStudentEvents() {
+        let db = Firestore.firestore()
+        guard let user = Auth.auth().currentUser else {
+            showAlert(message: "No user logged in.")
+            return
+        }
+        
+        let userRef = db.collection("users").document(user.uid)
+        
+        userRef.getDocument { [weak self] document, error in
+            if let error = error {
+                self?.showAlert(message: "Error fetching data: \(error.localizedDescription)")
+                return
+            }
+            
+            if let document = document, let registeredEventIds = document["registeredEvents"] as? [String] {
+                self?.fetchRegisteredEvents(eventIds: registeredEventIds)
+            }
+        }
+    }
+    
+    func fetchAdminEvents() {
+        let db = Firestore.firestore()
+        let eventsCollection = db.collection("events")
+        
+        eventsCollection.whereField("userId", isEqualTo: Auth.auth().currentUser?.uid ?? "").getDocuments { [weak self] snapshot, error in
+            if let error = error {
+                self?.showAlert(message: "Error fetching events for admin role: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                self?.showAlert(message: "No events found.")
+                return
+            }
+            
+            let events = documents.compactMap { Event(dictionary: $0.data()) }
+            self?.registeredEvents = events
+            DispatchQueue.main.async {
+                self?.profileScreen.eventsTableView.reloadData()
+            }
+        }
+    }
+
     
     func fetchRegisteredEvents(eventIds: [String]) {
         let db = Firestore.firestore()
