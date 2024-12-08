@@ -8,6 +8,7 @@
 import FirebaseFirestore
 import FirebaseStorage
 import UIKit
+import FirebaseAuth
 
 class CreateEventViewController: UIViewController {
     var delegate: EventsViewController!
@@ -148,6 +149,8 @@ extension CreateEventViewController: UIImagePickerControllerDelegate,
 // MARK: - Firebase Operations
 extension CreateEventViewController {
     @objc func createEventButtonTapped() {
+        guard let user = Auth.auth().currentUser else { return }
+        let userId = user.uid
         guard let title = createEventScreen.eventTitleTextField.text,
             !title.isEmpty,
               let description = createEventScreen.eventDescriptionField.text,
@@ -173,14 +176,14 @@ extension CreateEventViewController {
                     title: title, description: description,
                     address: address, startTime: startTime,
                     endTime: endTime, startDate: startDate,
-                    imageUrl: imageUrl)
+                    imageUrl: imageUrl, userId: userId)
             }
         } else {
             saveEvent(
                 title: title, description: description,
                 address: address, startTime: startTime,
                 endTime: endTime, startDate: startDate,
-                imageUrl: nil)
+                imageUrl: nil, userId: userId)
         }
     }
 
@@ -221,7 +224,7 @@ extension CreateEventViewController {
     
     func saveEvent(title: String, description: String, address: String,
                   startTime: String, endTime: String, startDate: String,
-                  imageUrl: String?) {
+                   imageUrl: String?, userId: String) {
         
         let eventId = UUID().uuidString
         showActivityIndicator()
@@ -239,6 +242,7 @@ extension CreateEventViewController {
             "startTime": startTime,
             "endTime": endTime,
             "date": convertedDate,
+            "userId": userId,
             "timestamp": Timestamp(date: Date()),
         ]
 
@@ -254,8 +258,6 @@ extension CreateEventViewController {
                     message:
                         "Failed to create event: \(error.localizedDescription)")
             } else {
-                //                self?.showAlert(title: "Success", message: "Event created successfully!")
-                //                self?.navigationController?.popViewController(animated: true)
                 self?.hideActivityIndicator()
                 let successVC = EventSuccessViewController()
                 successVC.eventTitle = title

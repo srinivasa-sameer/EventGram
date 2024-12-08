@@ -14,14 +14,13 @@ extension RegisterViewController {
     func registerNewAccount() {
         showActivityIndicator()
 
-        guard let firstName = registerView.firstNameTextField.text,
-            let lastName = registerView.lastNameTextField.text,
+        guard let name = registerView.nameTextField.text,
             let email = registerView.emailTextField.text,
             let university = registerView.universityTextField.text,
             let password = registerView.passwordTextField.text,
             let retypePassword = registerView.retypePasswordTextField.text,
-            !firstName.isEmpty,
-            !lastName.isEmpty,
+            let accessCode = registerView.accessCodeTextField.text,
+            !name.isEmpty,
             !email.isEmpty,
             !university.isEmpty,
             !password.isEmpty,
@@ -42,6 +41,14 @@ extension RegisterViewController {
             showAlert(message: "The passwords do not match.")
             return
         }
+        
+        if(!accessCode.isEmpty){
+            guard accessCode == "1289" else {
+                showAlert(message: "Wrong access code.")
+                return
+            }
+        }
+        
 
         // Continue with Firebase user creation
         Auth.auth().createUser(withEmail: email, password: password) {
@@ -102,21 +109,32 @@ extension RegisterViewController {
             self.present(tabBarController, animated: true)
 
             if let uid = result?.user.uid {
-                let fullName = "\(firstName) \(lastName)"
+                let name = "\(name)"
                 // Set display name and add user to Firestore
-                self.setNameOfTheUserInFirebaseAuth(name: fullName, uid: uid)
-
-                // Create user data dictionary
-                let userData: [String: Any] = [
-                    "uid": uid,
-                    "firstName": firstName,
-                    "lastName": lastName,
-                    "email": email,
-                    "university": university,
-                    "createdAt": FieldValue.serverTimestamp(),
-                ]
-
-                self.addUserToFirestore(uid: uid, userData: userData)
+                self.setNameOfTheUserInFirebaseAuth(name: name, uid: uid)
+                
+                if(!accessCode.isEmpty){
+                    let userData: [String: Any] = [
+                        "uid": uid,
+                        "name": name,
+                        "email": email,
+                        "university": university,
+                        "createdAt": FieldValue.serverTimestamp(),
+                        "accessCode": accessCode,
+                        "role": "Club Admin"
+                    ]
+                    self.addUserToFirestore(uid: uid, userData: userData)
+                } else{
+                    let userData: [String: Any] = [
+                        "uid": uid,
+                        "name": name,
+                        "email": email,
+                        "university": university,
+                        "createdAt": FieldValue.serverTimestamp(),
+                        "role": "Student"
+                    ]
+                    self.addUserToFirestore(uid: uid, userData: userData)
+                }
             }
         }
     }

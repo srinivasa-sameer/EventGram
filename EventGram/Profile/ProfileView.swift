@@ -43,7 +43,7 @@ class ProfileView: UIView {
     func setupNameLabel() {
         nameLabel = UILabel()
         nameLabel.text = "Name"
-        nameLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        nameLabel.font = .systemFont(ofSize: 20, weight: .bold)
         nameLabel.textAlignment = .center
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(nameLabel)
@@ -52,7 +52,7 @@ class ProfileView: UIView {
     func setupUniversityLabel() {
         universityLabel = UILabel()
         universityLabel.text = "University"
-        universityLabel.font = .systemFont(ofSize: 22, weight: .bold)
+        universityLabel.font = .systemFont(ofSize: 16, weight: .bold)
         universityLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(universityLabel)
     }
@@ -85,7 +85,7 @@ class ProfileView: UIView {
             universityLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
             universityLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            myEventsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 50),
+            myEventsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 70),
             myEventsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             
             eventsTableView.topAnchor.constraint(equalTo: myEventsLabel.bottomAnchor, constant: 16),

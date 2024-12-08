@@ -12,12 +12,13 @@ class RegisterView: UIView {
     var welcomeLabel: UILabel!
     var eventGramLabel: UILabel!
     var subtitleLabel: UILabel!
-    var firstNameTextField: UITextField!
-    var lastNameTextField: UITextField!
+    var nameTextField: UITextField!
     var emailTextField: UITextField!
     var universityTextField: UITextField!
     var passwordTextField: UITextField!
     var retypePasswordTextField: UITextField!
+    var clubLabel: UILabel!
+    var accessCodeTextField: UITextField!
     var createAccountButton: UIButton!
     var loginPromptButton: UIButton!
     
@@ -28,12 +29,13 @@ class RegisterView: UIView {
         setupWelcomeLabel()
         setupEventGramLabel()
         setupSubtitleLabel()
-        setupFirstNameTextField()
-        setupLastNameTextField()
+        setupNameTextField()
         setupEmailTextField()
         setupUniversityTextField()
         setupPasswordTextField()
         setupRetypePasswordTextField()
+        setupClubLabel()
+        setupAccessCodeTextField()
         setupCreateAccountButton()
         setupLoginPromptButton()
         initConstraints()
@@ -69,20 +71,12 @@ class RegisterView: UIView {
         self.addSubview(subtitleLabel)
     }
     
-    func setupFirstNameTextField() {
-        firstNameTextField = UITextField()
-        firstNameTextField.placeholder = "First Name"
-        firstNameTextField.borderStyle = .roundedRect
-        firstNameTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(firstNameTextField)
-    }
-    
-    func setupLastNameTextField() {
-        lastNameTextField = UITextField()
-        lastNameTextField.placeholder = "Last Name"
-        lastNameTextField.borderStyle = .roundedRect
-        lastNameTextField.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(lastNameTextField)
+    func setupNameTextField() {
+        nameTextField = UITextField()
+        nameTextField.placeholder = "Name"
+        nameTextField.borderStyle = .roundedRect
+        nameTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(nameTextField)
     }
     
     func setupEmailTextField() {
@@ -119,6 +113,23 @@ class RegisterView: UIView {
         self.addSubview(retypePasswordTextField)
     }
     
+    func setupClubLabel(){
+        clubLabel = UILabel()
+        clubLabel.text = "Want to register as a club? Please enter the Access Code given to you!"
+        clubLabel.numberOfLines = 2
+        clubLabel.textColor = UIColor.lightGray
+        clubLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(clubLabel)
+    }
+    
+    func setupAccessCodeTextField(){
+        accessCodeTextField = UITextField()
+        accessCodeTextField.placeholder = "Enter Access Code"
+        accessCodeTextField.borderStyle = .roundedRect
+        accessCodeTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(accessCodeTextField)
+    }
+    
     func setupCreateAccountButton() {
         createAccountButton = UIButton()
         createAccountButton.setTitle("Create Account", for: .normal)
@@ -148,17 +159,12 @@ class RegisterView: UIView {
             subtitleLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 8),
             subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             
-            firstNameTextField.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 40),
-            firstNameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            firstNameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            firstNameTextField.heightAnchor.constraint(equalToConstant: 50),
+            nameTextField.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 40),
+            nameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            nameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            nameTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            lastNameTextField.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 16),
-            lastNameTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            lastNameTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            lastNameTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            emailTextField.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: 16),
+            emailTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 16),
             emailTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             emailTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             emailTextField.heightAnchor.constraint(equalToConstant: 50),
@@ -177,6 +183,16 @@ class RegisterView: UIView {
             retypePasswordTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             retypePasswordTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             retypePasswordTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            clubLabel.topAnchor.constraint(equalTo: retypePasswordTextField.bottomAnchor, constant: 16),
+            clubLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            clubLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            clubLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            accessCodeTextField.topAnchor.constraint(equalTo: clubLabel.bottomAnchor, constant: 16),
+            accessCodeTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            accessCodeTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            accessCodeTextField.heightAnchor.constraint(equalToConstant: 50),
             
 
             createAccountButton.bottomAnchor.constraint(equalTo: loginPromptButton.topAnchor, constant: -8),

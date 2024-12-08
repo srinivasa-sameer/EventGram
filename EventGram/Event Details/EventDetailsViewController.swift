@@ -75,7 +75,6 @@ class EventDetailsViewController: UIViewController {
             timeStyle: .short
         )
         detailsView.locationLabel.text = event.location
-        // ... rest of your UI updates
     }
 
     func searchAndDisplayLocation() {
@@ -126,6 +125,7 @@ class EventDetailsViewController: UIViewController {
         let userId = user.uid
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(userId)
+        let eventUserId = event?.userId
 
         userRef.getDocument { [weak self] document, error in
             if let error = error {
@@ -133,32 +133,43 @@ class EventDetailsViewController: UIViewController {
                 return
             }
 
-            if let document = document, let data = document.data(),
-                let registeredEvents = data["registeredEvents"] as? [String]
+            if let document = document,
+                let data = document.data(),
+                let role = data["role"] as? String
             {
-                // Check if the event is already registered
-                if registeredEvents.contains(eventId) {
-                    DispatchQueue.main.async {
-                        self?.detailsView.bookTicketButton.setTitle(
-                            "Cancel Registration", for: .normal)
-                        self?.detailsView.bookTicketButton.backgroundColor =
-                            .black
-                        self?.detailsView.bookTicketButton.removeTarget(
-                            nil, action: nil, for: .allEvents)
-                        self?.detailsView.bookTicketButton.addTarget(
-                            self,
-                            action: #selector(self?.onCancelRegistrationTapped),
-                            for: .touchUpInside)
-                    }
-                }
-            } else {
+
                 DispatchQueue.main.async {
-                    self?.detailsView.bookTicketButton.setTitle(
-                        "Book Ticket", for: .normal)
-                    self?.detailsView.bookTicketButton.backgroundColor =
-                        UIColor(
-                            red: 190 / 255, green: 40 / 255, blue: 60 / 255,
-                            alpha: 1.0)
+                    if role == "Student" {
+                        self?.detailsView.bookTicketButton.isHidden = false
+                        // Check registration status only for students
+                        if let registeredEvents = data["registeredEvents"]
+                            as? [String],
+                            registeredEvents.contains(eventId)
+                        {
+                            self?.detailsView.bookTicketButton.setTitle(
+                                "Cancel Registration", for: .normal)
+                            self?.detailsView.bookTicketButton.backgroundColor =
+                                .black
+                            self?.detailsView.bookTicketButton.removeTarget(
+                                nil, action: nil, for: .allEvents)
+                            self?.detailsView.bookTicketButton.addTarget(
+                                self,
+                                action: #selector(
+                                    self?.onCancelRegistrationTapped),
+                                for: .touchUpInside)
+                        } else {
+                            self?.detailsView.bookTicketButton.setTitle(
+                                "Book Ticket", for: .normal)
+                            self?.detailsView.bookTicketButton.backgroundColor =
+                                UIColor(
+                                    red: 190 / 255,
+                                    green: 40 / 255,
+                                    blue: 60 / 255,
+                                    alpha: 1.0)
+                        }
+                    } else if role == "Club Admin"{
+                        self?.detailsView.bookTicketButton.isHidden = true
+                    }
                 }
             }
         }
