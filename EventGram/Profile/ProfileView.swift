@@ -14,6 +14,7 @@ class ProfileView: UIView {
     var universityLabel: UILabel!
     var myEventsLabel: UILabel!
     var eventsTableView: UITableView!
+    var separator: UIView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,6 +24,7 @@ class ProfileView: UIView {
         setupNameLabel()
         setupUniversityLabel()
         setupMyEventsLabel()
+        setupSeparator()
         setupTableView()
         initConstraints()
     }
@@ -57,6 +59,13 @@ class ProfileView: UIView {
         self.addSubview(universityLabel)
     }
     
+    func setupSeparator() {
+        separator = UIView()
+        separator.backgroundColor = .systemGray5
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(separator)
+    }
+    
     func setupMyEventsLabel() {
         myEventsLabel = UILabel()
         myEventsLabel.text = "My Events"
@@ -85,10 +94,16 @@ class ProfileView: UIView {
             universityLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
             universityLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            myEventsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 70),
+            separator.leadingAnchor.constraint(equalTo: leadingAnchor),
+            separator.trailingAnchor.constraint(equalTo: trailingAnchor),
+            separator.heightAnchor.constraint(equalToConstant: 4),
+            separator.topAnchor.constraint(
+                equalTo: universityLabel.bottomAnchor, constant: 25),
+            
+            myEventsLabel.topAnchor.constraint(equalTo: separator.bottomAnchor, constant: 15),
             myEventsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             
-            eventsTableView.topAnchor.constraint(equalTo: myEventsLabel.bottomAnchor, constant: 16),
+            eventsTableView.topAnchor.constraint(equalTo: myEventsLabel.bottomAnchor, constant: 10),
             eventsTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             eventsTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             eventsTableView.bottomAnchor.constraint(equalTo: bottomAnchor)

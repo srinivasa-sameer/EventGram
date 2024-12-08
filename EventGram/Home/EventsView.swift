@@ -68,8 +68,8 @@ class EventsView: UIView {
 
     func setupTitleLabel() {
         titleLabel = UILabel()
-        titleLabel.text = "Upcoming Events"
-        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+        titleLabel.text = "Events @ Northeastern University"
+        titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(titleLabel)
     }
