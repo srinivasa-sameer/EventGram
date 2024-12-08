@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 
 class EventDetailsView: UIView {
     
@@ -19,6 +20,7 @@ class EventDetailsView: UIView {
     var locationIcon: UIImageView!
     var locationLabel: UILabel!
     var bookTicketButton: UIButton!
+    var mapView: MKMapView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,6 +34,7 @@ class EventDetailsView: UIView {
         setupDateSection()
         setupLocationSection()
         setupBookTicketButton()
+        setupMapView()
         initConstraints()
     }
     
@@ -112,6 +115,14 @@ class EventDetailsView: UIView {
         self.addSubview(locationLabel)
     }
     
+    func setupMapView(){
+        mapView = MKMapView()
+        mapView.layer.cornerRadius = 12
+        mapView.clipsToBounds = true
+        
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(mapView)
+    }
     
     func setupBookTicketButton() {
         bookTicketButton = UIButton()
@@ -161,10 +172,16 @@ class EventDetailsView: UIView {
             locationLabel.centerYAnchor.constraint(equalTo: locationIcon.centerYAnchor),
             locationLabel.leadingAnchor.constraint(equalTo: locationIcon.trailingAnchor, constant: 8),
             
-            bookTicketButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            mapView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 16),
+                        mapView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+                        mapView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+                        mapView.heightAnchor.constraint(equalToConstant: 200),
+            
+            bookTicketButton.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 16),
             bookTicketButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             bookTicketButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            bookTicketButton.heightAnchor.constraint(equalToConstant: 50)
+            bookTicketButton.heightAnchor.constraint(equalToConstant: 50),
+            bookTicketButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
 }
