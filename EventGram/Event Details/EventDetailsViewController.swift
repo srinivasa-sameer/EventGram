@@ -11,6 +11,7 @@ import FirebaseFirestore
 import MapKit
 import UIKit
 
+
 class EventDetailsViewController: UIViewController {
 
     var event: Event?
@@ -29,12 +30,6 @@ class EventDetailsViewController: UIViewController {
         detailsView.mapView.showsUserLocation = true
         // Customize the details view with event data
         if let event = event {
-            detailsView.titleLabel.text = event.title
-            detailsView.descriptionLabel.text = event.description
-            detailsView.dateLabel.text = DateFormatter.localizedString(
-                from: event.date, dateStyle: .medium, timeStyle: .full)
-            detailsView.locationLabel.text = event.location
-            
             if let hostId = event.userId {
                     fetchHostName(userId: hostId)
                 }
@@ -90,11 +85,16 @@ class EventDetailsViewController: UIViewController {
     func updateUI(with event: Event) {
         detailsView.titleLabel.text = event.title
         detailsView.descriptionLabel.text = event.description
-        detailsView.dateLabel.text = DateFormatter.localizedString(
-            from: event.date,
-            dateStyle: .medium,
-            timeStyle: .short
-        )
+//        detailsView.dateLabel.text = DateFormatter.localizedString(
+//            from: event.date,
+//            dateStyle: .medium,
+//            timeStyle: .short
+//        )
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Includes the UTC timezone
+        let dateString = dateFormatter.string(from: event.date)
+        detailsView.dateLabel.text = "\(dateString) at \(event.startTime ?? "00:00")"
+
         detailsView.locationLabel.text = event.location
     }
 

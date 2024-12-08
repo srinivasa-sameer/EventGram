@@ -19,6 +19,7 @@ struct Event {
     let date: Date
     let imageUrl: String?
     let userId: String?
+    let startTime: String?
     
     init(dictionary: [String: Any]) {
         self.eventId = dictionary["eventId"] as? String ?? UUID().uuidString
@@ -28,6 +29,7 @@ struct Event {
         self.date = (dictionary["date"] as? Timestamp)?.dateValue() ?? Date()
         self.imageUrl = dictionary["imageUrl"] as? String
         self.userId = dictionary["userId"] as? String
+        self.startTime = dictionary["startTime"] as? String
     }
 }
 
