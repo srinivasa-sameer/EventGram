@@ -32,10 +32,9 @@ class EventDetailsViewController: UIViewController {
             detailsView.titleLabel.text = event.title
             detailsView.descriptionLabel.text = event.description
             detailsView.dateLabel.text = DateFormatter.localizedString(
-                from: event.date, dateStyle: .medium, timeStyle: .short)
+                from: event.date, dateStyle: .medium, timeStyle: .full)
             detailsView.locationLabel.text = event.location
             detailsView.organizerLabel.text = "Hosted By \(event.eventId)"
-            detailsView.attendingLabel.text = "\(event.title) Attending"
 
             if let imageUrl = event.imageUrl, let url = URL(string: imageUrl) {
                 detailsView.eventImageView.af.setImage(

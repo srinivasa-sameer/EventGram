@@ -14,7 +14,6 @@ class EventDetailsView: UIView {
     var titleLabel: UILabel!
     var descriptionLabel: UILabel!
     var organizerLabel: UILabel!
-    var attendingLabel: UILabel!
     var dateIcon: UIImageView!
     var dateLabel: UILabel!
     var locationIcon: UIImageView!
@@ -30,7 +29,6 @@ class EventDetailsView: UIView {
         setupTitleLabel()
         setupDescriptionLabel()
         setupOrganizer()
-        setupAttendees()
         setupDateSection()
         setupLocationSection()
         setupBookTicketButton()
@@ -75,14 +73,6 @@ class EventDetailsView: UIView {
         organizerLabel.font = .systemFont(ofSize: 16)
         organizerLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(organizerLabel)
-    }
-    
-    func setupAttendees() {
-        attendingLabel = UILabel()
-        attendingLabel.text = "Attending"
-        attendingLabel.font = .systemFont(ofSize: 16)
-        attendingLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(attendingLabel)
     }
     
     func setupDateSection() {
@@ -135,7 +125,7 @@ class EventDetailsView: UIView {
     
     func initConstraints() {
         NSLayoutConstraint.activate([
-            eventImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            eventImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             eventImageView.heightAnchor.constraint(equalToConstant: 200),
@@ -152,11 +142,7 @@ class EventDetailsView: UIView {
             organizerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             organizerLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            attendingLabel.topAnchor.constraint(equalTo: organizerLabel.bottomAnchor, constant: 16),
-            attendingLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            attendingLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
-            dateIcon.topAnchor.constraint(equalTo: attendingLabel.bottomAnchor, constant: 16),
+            dateIcon.topAnchor.constraint(equalTo: organizerLabel.bottomAnchor, constant: 16),
             dateIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             dateIcon.widthAnchor.constraint(equalToConstant: 24),
             dateIcon.heightAnchor.constraint(equalToConstant: 24),
