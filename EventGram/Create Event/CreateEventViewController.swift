@@ -5,10 +5,10 @@
 //  Created by Srikar Nallapu on 11/29/24.
 //
 
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 import UIKit
-import FirebaseAuth
 
 class CreateEventViewController: UIViewController {
     var delegate: EventsViewController!
@@ -16,7 +16,7 @@ class CreateEventViewController: UIViewController {
     let imagePicker = UIImagePickerController()
     let db = Firestore.firestore()
     var selectedImage: UIImage?
-    
+
     let childProgressView = ProgressSpinnerViewController()
 
     override func loadView() {
@@ -153,7 +153,7 @@ extension CreateEventViewController {
         let userId = user.uid
         guard let title = createEventScreen.eventTitleTextField.text,
             !title.isEmpty,
-              let description = createEventScreen.eventDescriptionField.text,
+            let description = createEventScreen.eventDescriptionField.text,
             !description.isEmpty,
             let address = createEventScreen.addressTextField.text,
             !address.isEmpty,
@@ -221,11 +221,13 @@ extension CreateEventViewController {
 
         return date
     }
-    
-    func saveEvent(title: String, description: String, address: String,
-                  startTime: String, endTime: String, startDate: String,
-                   imageUrl: String?, userId: String) {
-        
+
+    func saveEvent(
+        title: String, description: String, address: String,
+        startTime: String, endTime: String, startDate: String,
+        imageUrl: String?, userId: String
+    ) {
+
         let eventId = UUID().uuidString
         showActivityIndicator()
 
@@ -249,7 +251,7 @@ extension CreateEventViewController {
         if let imageUrl = imageUrl {
             event["imageUrl"] = imageUrl
         }
-        
+
         db.collection("events").addDocument(data: event) { [weak self] error in
             if let error = error {
                 self?.hideActivityIndicator()
@@ -259,11 +261,29 @@ extension CreateEventViewController {
                         "Failed to create event: \(error.localizedDescription)")
             } else {
                 self?.hideActivityIndicator()
-                let successVC = EventSuccessViewController()
-                successVC.eventTitle = title
-                successVC.eventDate = startDate
-                successVC.modalPresentationStyle = .fullScreen
-                self?.present(successVC, animated: true)
+                let alert = UIAlertController(
+                    title: "Success",
+                    message: "Event created successfully!",
+                    preferredStyle: .alert
+                )
+
+                alert.addAction(
+                    UIAlertAction(title: "OK", style: .default) { _ in
+                        // Navigate to profile screen after alert is dismissed
+                        let profileViewController = ProfileViewController()
+                        self?.navigationController?.pushViewController(
+                            profileViewController, animated: true)
+                        self?.tabBarController?.selectedIndex = 2
+                    })
+                self?.present(alert, animated: true)
+
+                self?.createEventScreen.eventTitleTextField.text = ""
+                self?.createEventScreen.eventDescriptionField.text = ""
+                self?.createEventScreen.addressTextField.text = ""
+                self?.createEventScreen.startTimeTextField.text = ""
+                self?.createEventScreen.endTimeTextField.text = ""
+                self?.createEventScreen.dateTextField.text = ""
+                self?.selectedImage = nil
             }
         }
     }
@@ -276,14 +296,14 @@ extension CreateEventViewController {
     }
 }
 
-extension CreateEventViewController:ProgressSpinnerDelegate{
-    func showActivityIndicator(){
+extension CreateEventViewController: ProgressSpinnerDelegate {
+    func showActivityIndicator() {
         addChild(childProgressView)
         view.addSubview(childProgressView.view)
         childProgressView.didMove(toParent: self)
     }
-    
-    func hideActivityIndicator(){
+
+    func hideActivityIndicator() {
         childProgressView.willMove(toParent: nil)
         childProgressView.view.removeFromSuperview()
         childProgressView.removeFromParent()

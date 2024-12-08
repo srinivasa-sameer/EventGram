@@ -34,7 +34,10 @@ class EventDetailsViewController: UIViewController {
             detailsView.dateLabel.text = DateFormatter.localizedString(
                 from: event.date, dateStyle: .medium, timeStyle: .full)
             detailsView.locationLabel.text = event.location
-            detailsView.organizerLabel.text = "Hosted By \(event.eventId)"
+            
+            if let hostId = event.userId {
+                    fetchHostName(userId: hostId)
+                }
 
             if let imageUrl = event.imageUrl, let url = URL(string: imageUrl) {
                 detailsView.eventImageView.af.setImage(
@@ -55,6 +58,24 @@ class EventDetailsViewController: UIViewController {
         if let event = event {
             updateUI(with: event)
             searchAndDisplayLocation()
+        }
+    }
+    
+    func fetchHostName(userId: String) {
+        let db = Firestore.firestore()
+        db.collection("users").document(userId).getDocument { [weak self] (document: DocumentSnapshot?, error: Error?) in
+            if let error = error {
+                print("Error fetching host data: \(error.localizedDescription)")
+                return
+            }
+            
+            if let document = document,
+               let data = document.data(),
+               let name = data["name"] as? String {
+                DispatchQueue.main.async {
+                    self?.detailsView.organizerLabel.text = "Hosted by \(name)"
+                }
+            }
         }
     }
 
@@ -125,8 +146,7 @@ class EventDetailsViewController: UIViewController {
         let userId = user.uid
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(userId)
-        let eventUserId = event?.userId
-
+        
         userRef.getDocument { [weak self] document, error in
             if let error = error {
                 print("Error fetching user data: \(error.localizedDescription)")

@@ -7,6 +7,7 @@
 
 import FirebaseAuth
 import UIKit
+import FirebaseFirestore
 
 class LoginViewController: UIViewController {
 
@@ -88,6 +89,16 @@ class LoginViewController: UIViewController {
                     image: UIImage(systemName: "plus.circle"),
                     selectedImage: UIImage(systemName: "plus.circle.fill")
                 )
+                
+                // Search Tab
+                let searchVC = SearchViewController()
+                let searchNav = UINavigationController(
+                    rootViewController: searchVC)
+                searchNav.tabBarItem = UITabBarItem(
+                    title: "Search",
+                    image: UIImage(systemName: "magnifyingglass"),
+                    selectedImage: UIImage(systemName: "magnifyingglass.fill")
+                )
 
                 // Profile Tab
                 let profileVC = ProfileViewController()
@@ -98,11 +109,36 @@ class LoginViewController: UIViewController {
                     image: UIImage(systemName: "person"),
                     selectedImage: UIImage(systemName: "person.fill")
                 )
+                
+                guard let user = Auth.auth().currentUser else { return }
+                let userId = user.uid
+                let db = Firestore.firestore()
+                let userRef = db.collection("users").document(userId)
+                
+                userRef.getDocument { document, error in
+                    if let error = error {
+                        print("Error fetching user data: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    if let document = document,
+                       let data = document.data(),
+                       let role = data["role"] as? String
+                    {
+                        if(role == "Student"){
+                            // Setup Tab Bar
+                            tabBarController.viewControllers = [
+                                eventsNav, searchNav, profileNav,
+                            ]
+                        } else{
+                            // Setup Tab Bar
+                            tabBarController.viewControllers = [
+                                eventsNav, createEventNav, profileNav,
+                            ]
+                        }
+                    }
+                }
 
-                // Setup Tab Bar
-                tabBarController.viewControllers = [
-                    eventsNav, createEventNav, profileNav,
-                ]
                 tabBarController.tabBar.tintColor = UIColor(
                     red: 190 / 255, green: 40 / 255, blue: 60 / 255, alpha: 1.0)
                 tabBarController.tabBar.backgroundColor = .white

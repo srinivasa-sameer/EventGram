@@ -24,7 +24,7 @@ class ProfileViewController: UIViewController {
         let buttonLogout = UIButton(type: .system)
         buttonLogout.setTitle("Logout", for: .normal)
         buttonLogout.titleLabel?.font = .boldSystemFont(ofSize: 16)
-        buttonLogout.titleLabel?.textColor = .systemRed
+        buttonLogout.setTitleColor(UIColor(red: 190/255, green: 40/255, blue: 60/255, alpha: 1.0), for: .normal)
 
         buttonLogout.addTarget(self, action: #selector(onButtonLogoutTapped), for: .touchUpInside)
         let logoutBarButtonItem = UIBarButtonItem(customView: buttonLogout)
@@ -76,8 +76,10 @@ class ProfileViewController: UIViewController {
     func fetchEventsBasedOnRole(userRole:String) {
         
         if userRole == "Student" {
+            self.profileScreen.myEventsLabel.text = "My Bookings"
             fetchStudentEvents()
         } else if userRole == "Club Admin" {
+            self.profileScreen.myEventsLabel.text = "My Events"
             fetchAdminEvents()
         } else {
             showAlert(message: "Invalid user role.")
@@ -183,8 +185,8 @@ class ProfileViewController: UIViewController {
         logoutAlert.addAction(UIAlertAction(title: "Yes, log out!", style: .default, handler: {(_) in
             do {
                 try Auth.auth().signOut()
-                let viewController = ViewController()
-                let navigationController = UINavigationController(rootViewController: viewController)
+                let loginViewController = LoginViewController()
+                let navigationController = UINavigationController(rootViewController: loginViewController)
                 navigationController.setNavigationBarHidden(true, animated: false)
 
                 // Find the active UIWindowScene

@@ -43,9 +43,6 @@ class ViewController: UIViewController {
         let loginScreenController = LoginViewController()
         let navigationController = UINavigationController(rootViewController: loginScreenController)
         navigationController.setNavigationBarHidden(true, animated: false)
-//        let profileViewController = ProfileViewController()
-//        let navigationController = UINavigationController(rootViewController: profileViewController)
-//        navigationController.setNavigationBarHidden(true, animated: false)
         // Find the active UIWindowScene
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let window = windowScene.windows.first {
@@ -53,6 +50,5 @@ class ViewController: UIViewController {
             window.makeKeyAndVisible()
         }
         
-        //setupAuthListener()
     }
 }
