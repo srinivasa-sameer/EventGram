@@ -67,6 +67,7 @@ class LoginViewController: UIViewController {
 
                 // Create Tab Bar Controller
                 let tabBarController = UITabBarController()
+                tabBarController.delegate = self // Assign delegate here
 
                 // Home Tab
                 let eventsVC = EventsViewController()
@@ -142,5 +143,14 @@ extension LoginViewController: ProgressSpinnerDelegate {
         childProgressView.willMove(toParent: nil)
         childProgressView.view.removeFromSuperview()
         childProgressView.removeFromParent()
+    }
+}
+
+extension LoginViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        // Reset navigation stack of the selected tab
+        if let navigationController = viewController as? UINavigationController {
+            navigationController.popToRootViewController(animated: false)
+        }
     }
 }

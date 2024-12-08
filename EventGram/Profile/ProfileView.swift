@@ -67,7 +67,7 @@ class ProfileView: UIView {
     
     func setupTableView() {
         eventsTableView = UITableView()
-        eventsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "eventCell")
+        eventsTableView.register(TableViewEventCell.self, forCellReuseIdentifier: "events")
         eventsTableView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(eventsTableView)
     }
