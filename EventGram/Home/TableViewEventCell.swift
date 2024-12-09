@@ -28,7 +28,6 @@ class TableViewEventCell: UITableViewCell {
         initConstraints()
     }
 
-    //Adding the ImageView for receipt...
     func setupimageReceipt() {
         imageReceipt = UIImageView()
         imageReceipt.image = UIImage(systemName: "photo")
@@ -49,8 +48,8 @@ class TableViewEventCell: UITableViewCell {
         wrapperCellView.layer.cornerRadius = 16.0
         wrapperCellView.layer.shadowColor = UIColor.gray.cgColor
         wrapperCellView.layer.shadowOffset = CGSize(width: 0, height: 3)
-                wrapperCellView.layer.shadowRadius = 5.0
-                wrapperCellView.layer.shadowOpacity = 0.2
+        wrapperCellView.layer.shadowRadius = 5.0
+        wrapperCellView.layer.shadowOpacity = 0.2
         wrapperCellView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(wrapperCellView)
     }
@@ -92,17 +91,22 @@ class TableViewEventCell: UITableViewCell {
                 equalTo: wrapperCellView.topAnchor, constant: 12),
             labelTitle.leadingAnchor.constraint(
                 equalTo: imageReceipt.trailingAnchor, constant: 15),
-            labelTitle.trailingAnchor.constraint(equalTo: wrapperCellView.trailingAnchor, constant: -15),
+            labelTitle.trailingAnchor.constraint(
+                equalTo: wrapperCellView.trailingAnchor, constant: -15),
 
             labelDate.topAnchor.constraint(
                 equalTo: labelTitle.bottomAnchor, constant: 8),
             labelDate.leadingAnchor.constraint(
                 equalTo: labelTitle.leadingAnchor),
-            labelDate.trailingAnchor.constraint(equalTo: labelTitle.trailingAnchor),
-            
-            labelLocation.topAnchor.constraint(equalTo: labelDate.bottomAnchor, constant: 8),
-            labelLocation.leadingAnchor.constraint(equalTo: labelDate.leadingAnchor),
-            labelLocation.trailingAnchor.constraint(equalTo: labelDate.trailingAnchor),
+            labelDate.trailingAnchor.constraint(
+                equalTo: labelTitle.trailingAnchor),
+
+            labelLocation.topAnchor.constraint(
+                equalTo: labelDate.bottomAnchor, constant: 8),
+            labelLocation.leadingAnchor.constraint(
+                equalTo: labelDate.leadingAnchor),
+            labelLocation.trailingAnchor.constraint(
+                equalTo: labelDate.trailingAnchor),
 
             imageReceipt.leadingAnchor.constraint(
                 equalTo: wrapperCellView.leadingAnchor, constant: 14),
@@ -115,19 +119,15 @@ class TableViewEventCell: UITableViewCell {
         ])
     }
 
-    //MARK: unused methods...
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

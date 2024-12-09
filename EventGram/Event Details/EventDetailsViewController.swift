@@ -1,16 +1,15 @@
-////
-////  EventDetailsViewController.swift
-////  EventGram
-////
-////  Created by Srikar Nallapu on 11/29/24.
-////
+//
+//  EventDetailsViewController.swift
+//  EventGram
+//
+//  Created by Srikar Nallapu on 11/29/24.
+//
 
 import CoreLocation
 import FirebaseAuth
 import FirebaseFirestore
 import MapKit
 import UIKit
-
 
 class EventDetailsViewController: UIViewController {
 
@@ -31,8 +30,8 @@ class EventDetailsViewController: UIViewController {
         // Customize the details view with event data
         if let event = event {
             if let hostId = event.userId {
-                    fetchHostName(userId: hostId)
-                }
+                fetchHostName(userId: hostId)
+            }
 
             if let imageUrl = event.imageUrl, let url = URL(string: imageUrl) {
                 detailsView.eventImageView.af.setImage(
@@ -55,18 +54,20 @@ class EventDetailsViewController: UIViewController {
             searchAndDisplayLocation()
         }
     }
-    
+
     func fetchHostName(userId: String) {
         let db = Firestore.firestore()
-        db.collection("users").document(userId).getDocument { [weak self] (document: DocumentSnapshot?, error: Error?) in
+        db.collection("users").document(userId).getDocument {
+            [weak self] (document: DocumentSnapshot?, error: Error?) in
             if let error = error {
                 print("Error fetching host data: \(error.localizedDescription)")
                 return
             }
-            
+
             if let document = document,
-               let data = document.data(),
-               let name = data["name"] as? String {
+                let data = document.data(),
+                let name = data["name"] as? String
+            {
                 DispatchQueue.main.async {
                     self?.detailsView.organizerLabel.text = "Hosted by \(name)"
                 }
@@ -85,15 +86,16 @@ class EventDetailsViewController: UIViewController {
     func updateUI(with event: Event) {
         detailsView.titleLabel.text = event.title
         detailsView.descriptionLabel.text = event.description
-//        detailsView.dateLabel.text = DateFormatter.localizedString(
-//            from: event.date,
-//            dateStyle: .medium,
-//            timeStyle: .short
-//        )
+        //        detailsView.dateLabel.text = DateFormatter.localizedString(
+        //            from: event.date,
+        //            dateStyle: .medium,
+        //            timeStyle: .short
+        //        )
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" // Includes the UTC timezone
+        dateFormatter.dateFormat = "yyyy-MM-dd"  // Includes the UTC timezone
         let dateString = dateFormatter.string(from: event.date)
-        detailsView.dateLabel.text = "\(dateString) at \(event.startTime ?? "00:00")"
+        detailsView.dateLabel.text =
+            "\(dateString) at \(event.startTime ?? "00:00")"
 
         detailsView.locationLabel.text = event.location
     }
@@ -146,7 +148,7 @@ class EventDetailsViewController: UIViewController {
         let userId = user.uid
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(userId)
-        
+
         userRef.getDocument { [weak self] document, error in
             if let error = error {
                 print("Error fetching user data: \(error.localizedDescription)")
@@ -187,7 +189,7 @@ class EventDetailsViewController: UIViewController {
                                     blue: 60 / 255,
                                     alpha: 1.0)
                         }
-                    } else if role == "Club Admin"{
+                    } else if role == "Club Admin" {
                         self?.detailsView.bookTicketButton.isHidden = true
                     }
                 }

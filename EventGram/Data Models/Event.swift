@@ -5,11 +5,10 @@
 //  Created by Srinivasa Sameer Addepalli on 11/29/24.
 //
 
-import Foundation
-import UIKit
 import FirebaseCore
 import FirebaseFirestore
- 
+import Foundation
+import UIKit
 
 struct Event {
     let eventId: String
@@ -20,7 +19,7 @@ struct Event {
     let imageUrl: String?
     let userId: String?
     let startTime: String?
-    
+
     init(dictionary: [String: Any]) {
         self.eventId = dictionary["eventId"] as? String ?? UUID().uuidString
         self.title = dictionary["title"] as? String ?? ""
@@ -32,4 +31,3 @@ struct Event {
         self.startTime = dictionary["startTime"] as? String
     }
 }
-

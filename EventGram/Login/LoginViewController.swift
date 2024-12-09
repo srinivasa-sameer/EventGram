@@ -6,8 +6,8 @@
 //
 
 import FirebaseAuth
-import UIKit
 import FirebaseFirestore
+import UIKit
 
 class LoginViewController: UIViewController {
 
@@ -24,15 +24,12 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //title = "Login"
 
-        // Add targets for buttons
         loginScreen.signInButton.addTarget(
             self, action: #selector(onSignInTapped), for: .touchUpInside)
         loginScreen.createAccountButton.addTarget(
             self, action: #selector(onCreateAccountTapped), for: .touchUpInside)
 
-        // Add tap gesture to dismiss keyboard
         let tapRecognizer = UITapGestureRecognizer(
             target: self, action: #selector(hideKeyboardOnTap))
         tapRecognizer.cancelsTouchesInView = false
@@ -44,7 +41,6 @@ class LoginViewController: UIViewController {
     }
 
     @objc func onSignInTapped() {
-        // Validate inputs
         if let email = loginScreen.emailTextField.text,
             let password = loginScreen.passwordTextField.text
         {
@@ -53,10 +49,8 @@ class LoginViewController: UIViewController {
                 return
             }
 
-            // Show progress indicator
             showActivityIndicator()
 
-            // Sign in with Firebase
             Auth.auth().signIn(withEmail: email, password: password) {
                 [weak self] authResult, error in
                 self?.hideActivityIndicator()
@@ -66,11 +60,9 @@ class LoginViewController: UIViewController {
                     return
                 }
 
-                // Create Tab Bar Controller
                 let tabBarController = UITabBarController()
-                tabBarController.delegate = self // Assign delegate here
+                tabBarController.delegate = self
 
-                // Home Tab
                 let eventsVC = EventsViewController()
                 let eventsNav = UINavigationController(
                     rootViewController: eventsVC)
@@ -80,7 +72,6 @@ class LoginViewController: UIViewController {
                     selectedImage: UIImage(systemName: "house.fill")
                 )
 
-                // Create Event Tab
                 let createEventVC = CreateEventViewController()
                 let createEventNav = UINavigationController(
                     rootViewController: createEventVC)
@@ -89,8 +80,7 @@ class LoginViewController: UIViewController {
                     image: UIImage(systemName: "plus.circle"),
                     selectedImage: UIImage(systemName: "plus.circle.fill")
                 )
-                
-                // Search Tab
+
                 let searchVC = SearchViewController()
                 let searchNav = UINavigationController(
                     rootViewController: searchVC)
@@ -100,7 +90,6 @@ class LoginViewController: UIViewController {
                     selectedImage: UIImage(systemName: "magnifyingglass.fill")
                 )
 
-                // Profile Tab
                 let profileVC = ProfileViewController()
                 let profileNav = UINavigationController(
                     rootViewController: profileVC)
@@ -109,29 +98,29 @@ class LoginViewController: UIViewController {
                     image: UIImage(systemName: "person"),
                     selectedImage: UIImage(systemName: "person.fill")
                 )
-                
+
                 guard let user = Auth.auth().currentUser else { return }
                 let userId = user.uid
                 let db = Firestore.firestore()
                 let userRef = db.collection("users").document(userId)
-                
+
                 userRef.getDocument { document, error in
                     if let error = error {
-                        print("Error fetching user data: \(error.localizedDescription)")
+                        print(
+                            "Error fetching user data: \(error.localizedDescription)"
+                        )
                         return
                     }
-                    
+
                     if let document = document,
-                       let data = document.data(),
-                       let role = data["role"] as? String
+                        let data = document.data(),
+                        let role = data["role"] as? String
                     {
-                        if(role == "Student"){
-                            // Setup Tab Bar
+                        if role == "Student" {
                             tabBarController.viewControllers = [
                                 eventsNav, searchNav, profileNav,
                             ]
-                        } else{
-                            // Setup Tab Bar
+                        } else {
                             tabBarController.viewControllers = [
                                 eventsNav, createEventNav, profileNav,
                             ]
@@ -143,7 +132,6 @@ class LoginViewController: UIViewController {
                     red: 190 / 255, green: 40 / 255, blue: 60 / 255, alpha: 1.0)
                 tabBarController.tabBar.backgroundColor = .white
 
-                // Present Tab Bar Controller
                 tabBarController.modalPresentationStyle = .fullScreen
                 self?.present(tabBarController, animated: true)
             }
@@ -183,9 +171,12 @@ extension LoginViewController: ProgressSpinnerDelegate {
 }
 
 extension LoginViewController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        // Reset navigation stack of the selected tab
-        if let navigationController = viewController as? UINavigationController {
+    func tabBarController(
+        _ tabBarController: UITabBarController,
+        didSelect viewController: UIViewController
+    ) {
+        if let navigationController = viewController as? UINavigationController
+        {
             navigationController.popToRootViewController(animated: false)
         }
     }

@@ -28,15 +28,20 @@ class EventSuccessViewController: UIViewController {
     }
 
     @objc func goToEventsTapped() {
-        // First dismiss all presented view controllers until we reach the tab bar controller
-        view.window?.rootViewController?.dismiss(animated: true) { [weak self] in
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-               let window = windowScene.windows.first,
-               let tabBarController = window.rootViewController as? UITabBarController {
-                // Switch to Profile tab (index 2)
+        view.window?.rootViewController?.dismiss(animated: true) {
+            [weak self] in
+            if let windowScene = UIApplication.shared.connectedScenes.first
+                as? UIWindowScene,
+                let window = windowScene.windows.first,
+                let tabBarController = window.rootViewController
+                    as? UITabBarController
+            {
+
                 tabBarController.selectedIndex = 2
-                // Remove any presented view controllers in the profile tab
-                if let navigationController = tabBarController.selectedViewController as? UINavigationController {
+
+                if let navigationController = tabBarController
+                    .selectedViewController as? UINavigationController
+                {
                     navigationController.popToRootViewController(animated: true)
                 }
             }

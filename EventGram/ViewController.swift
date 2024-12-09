@@ -41,14 +41,17 @@ class ViewController: UIViewController {
 
     @objc private func getStartedTapped() {
         let loginScreenController = LoginViewController()
-        let navigationController = UINavigationController(rootViewController: loginScreenController)
+        let navigationController = UINavigationController(
+            rootViewController: loginScreenController)
         navigationController.setNavigationBarHidden(true, animated: false)
-        // Find the active UIWindowScene
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
+
+        if let windowScene = UIApplication.shared.connectedScenes.first
+            as? UIWindowScene,
+            let window = windowScene.windows.first
+        {
             window.rootViewController = navigationController
             window.makeKeyAndVisible()
         }
-        
+
     }
 }

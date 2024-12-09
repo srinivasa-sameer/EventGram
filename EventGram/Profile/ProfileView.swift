@@ -8,18 +8,18 @@
 import UIKit
 
 class ProfileView: UIView {
-    
+
     var profileImageView: UIImageView!
     var nameLabel: UILabel!
     var universityLabel: UILabel!
     var myEventsLabel: UILabel!
     var eventsTableView: UITableView!
     var separator: UIView!
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
-        
+
         setupProfileImage()
         setupNameLabel()
         setupUniversityLabel()
@@ -28,11 +28,11 @@ class ProfileView: UIView {
         setupTableView()
         initConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setupProfileImage() {
         profileImageView = UIImageView()
         profileImageView.image = UIImage(systemName: "person.circle.fill")
@@ -41,7 +41,7 @@ class ProfileView: UIView {
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(profileImageView)
     }
-    
+
     func setupNameLabel() {
         nameLabel = UILabel()
         nameLabel.text = "Name"
@@ -50,7 +50,7 @@ class ProfileView: UIView {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(nameLabel)
     }
-    
+
     func setupUniversityLabel() {
         universityLabel = UILabel()
         universityLabel.text = "University"
@@ -58,14 +58,14 @@ class ProfileView: UIView {
         universityLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(universityLabel)
     }
-    
+
     func setupSeparator() {
         separator = UIView()
         separator.backgroundColor = .systemGray5
         separator.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(separator)
     }
-    
+
     func setupMyEventsLabel() {
         myEventsLabel = UILabel()
         myEventsLabel.text = "My Events"
@@ -73,40 +73,47 @@ class ProfileView: UIView {
         myEventsLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(myEventsLabel)
     }
-    
+
     func setupTableView() {
         eventsTableView = UITableView()
-        eventsTableView.register(TableViewEventCell.self, forCellReuseIdentifier: "events")
+        eventsTableView.register(
+            TableViewEventCell.self, forCellReuseIdentifier: "events")
         eventsTableView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(eventsTableView)
     }
-    
+
     func initConstraints() {
         NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            profileImageView.topAnchor.constraint(
+                equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
             profileImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             profileImageView.widthAnchor.constraint(equalToConstant: 100),
             profileImageView.heightAnchor.constraint(equalToConstant: 100),
-            
-            nameLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 16),
+
+            nameLabel.topAnchor.constraint(
+                equalTo: profileImageView.bottomAnchor, constant: 16),
             nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            
-            universityLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+
+            universityLabel.topAnchor.constraint(
+                equalTo: nameLabel.bottomAnchor, constant: 10),
             universityLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            
+
             separator.leadingAnchor.constraint(equalTo: leadingAnchor),
             separator.trailingAnchor.constraint(equalTo: trailingAnchor),
             separator.heightAnchor.constraint(equalToConstant: 4),
             separator.topAnchor.constraint(
                 equalTo: universityLabel.bottomAnchor, constant: 25),
-            
-            myEventsLabel.topAnchor.constraint(equalTo: separator.bottomAnchor, constant: 15),
-            myEventsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            
-            eventsTableView.topAnchor.constraint(equalTo: myEventsLabel.bottomAnchor, constant: 10),
+
+            myEventsLabel.topAnchor.constraint(
+                equalTo: separator.bottomAnchor, constant: 15),
+            myEventsLabel.leadingAnchor.constraint(
+                equalTo: leadingAnchor, constant: 20),
+
+            eventsTableView.topAnchor.constraint(
+                equalTo: myEventsLabel.bottomAnchor, constant: 10),
             eventsTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             eventsTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            eventsTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            eventsTableView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 }

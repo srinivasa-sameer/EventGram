@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ProgressSpinnerDelegate{
+protocol ProgressSpinnerDelegate {
     func showActivityIndicator()
     func hideActivityIndicator()
 }

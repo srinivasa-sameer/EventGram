@@ -14,20 +14,19 @@ class RegisterViewController: UIViewController {
     let registerView = RegisterView()
 
     let childProgressView = ProgressSpinnerViewController()
-    //
+
     override func loadView() {
         view = registerView
     }
-    //
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        //title = "Register"
 
         let tapRecognizer = UITapGestureRecognizer(
             target: self, action: #selector(hideKeyboardOnTap))
         tapRecognizer.cancelsTouchesInView = false
         view.addGestureRecognizer(tapRecognizer)
-        
+
         navigationController?.navigationBar.prefersLargeTitles = true
         registerView.createAccountButton.addTarget(
             self, action: #selector(onRegisterTapped), for: .touchUpInside)
@@ -51,14 +50,14 @@ class RegisterViewController: UIViewController {
     }
 }
 
-extension RegisterViewController:ProgressSpinnerDelegate{
-    func showActivityIndicator(){
+extension RegisterViewController: ProgressSpinnerDelegate {
+    func showActivityIndicator() {
         addChild(childProgressView)
         view.addSubview(childProgressView.view)
         childProgressView.didMove(toParent: self)
     }
-    
-    func hideActivityIndicator(){
+
+    func hideActivityIndicator() {
         childProgressView.willMove(toParent: nil)
         childProgressView.view.removeFromSuperview()
         childProgressView.removeFromParent()

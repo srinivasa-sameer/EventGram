@@ -30,27 +30,23 @@ extension RegisterViewController {
             return
         }
 
-        // Validate the email format
         guard isValidNortheasternEmail(email) else {
             showAlert(message: "Please use a valid Northeastern email address.")
             return
         }
 
-        // Check if the passwords match
         guard password == retypePassword else {
             showAlert(message: "The passwords do not match.")
             return
         }
-        
-        if(!accessCode.isEmpty){
+
+        if !accessCode.isEmpty {
             guard accessCode == "1289" else {
                 showAlert(message: "Wrong access code.")
                 return
             }
         }
-        
 
-        // Continue with Firebase user creation
         Auth.auth().createUser(withEmail: email, password: password) {
             [weak self] result, error in
             guard let self = self else { return }
@@ -63,10 +59,8 @@ extension RegisterViewController {
                 return
             }
 
-            // Create Tab Bar Controller
             let tabBarController = UITabBarController()
 
-            // Home Tab
             let eventsVC = EventsViewController()
             let eventsNav = UINavigationController(
                 rootViewController: eventsVC)
@@ -76,7 +70,6 @@ extension RegisterViewController {
                 selectedImage: UIImage(systemName: "house.fill")
             )
 
-            // Create Event Tab
             let createEventVC = CreateEventViewController()
             let createEventNav = UINavigationController(
                 rootViewController: createEventVC)
@@ -85,8 +78,7 @@ extension RegisterViewController {
                 image: UIImage(systemName: "plus.circle"),
                 selectedImage: UIImage(systemName: "plus.circle.fill")
             )
-            
-            // Search Tab
+
             let searchVC = SearchViewController()
             let searchNav = UINavigationController(
                 rootViewController: searchVC)
@@ -96,7 +88,6 @@ extension RegisterViewController {
                 selectedImage: UIImage(systemName: "magnifyingglass.fill")
             )
 
-            // Profile Tab
             let profileVC = ProfileViewController()
             let profileNav = UINavigationController(
                 rootViewController: profileVC)
@@ -110,45 +101,43 @@ extension RegisterViewController {
             let userId = user.uid
             let db = Firestore.firestore()
             let userRef = db.collection("users").document(userId)
-            
+
             userRef.getDocument { document, error in
                 if let error = error {
-                    print("Error fetching user data: \(error.localizedDescription)")
+                    print(
+                        "Error fetching user data: \(error.localizedDescription)"
+                    )
                     return
                 }
-                
+
                 if let document = document,
-                   let data = document.data(),
-                   let role = data["role"] as? String
+                    let data = document.data(),
+                    let role = data["role"] as? String
                 {
-                    if(role == "Student"){
-                        // Setup Tab Bar
+                    if role == "Student" {
                         tabBarController.viewControllers = [
                             eventsNav, searchNav, profileNav,
                         ]
-                    } else{
-                        // Setup Tab Bar
+                    } else {
                         tabBarController.viewControllers = [
                             eventsNav, createEventNav, profileNav,
                         ]
                     }
                 }
             }
-            
+
             tabBarController.tabBar.tintColor = UIColor(
                 red: 190 / 255, green: 40 / 255, blue: 60 / 255, alpha: 1.0)
             tabBarController.tabBar.backgroundColor = .white
 
-            // Present Tab Bar Controller
             tabBarController.modalPresentationStyle = .fullScreen
             self.present(tabBarController, animated: true)
 
             if let uid = result?.user.uid {
                 let name = "\(name)"
-                // Set display name and add user to Firestore
                 self.setNameOfTheUserInFirebaseAuth(name: name, uid: uid)
-                
-                if(!accessCode.isEmpty){
+
+                if !accessCode.isEmpty {
                     let userData: [String: Any] = [
                         "uid": uid,
                         "name": name,
@@ -156,17 +145,17 @@ extension RegisterViewController {
                         "university": university,
                         "createdAt": FieldValue.serverTimestamp(),
                         "accessCode": accessCode,
-                        "role": "Club Admin"
+                        "role": "Club Admin",
                     ]
                     self.addUserToFirestore(uid: uid, userData: userData)
-                } else{
+                } else {
                     let userData: [String: Any] = [
                         "uid": uid,
                         "name": name,
                         "email": email,
                         "university": university,
                         "createdAt": FieldValue.serverTimestamp(),
-                        "role": "Student"
+                        "role": "Student",
                     ]
                     self.addUserToFirestore(uid: uid, userData: userData)
                 }
@@ -221,7 +210,6 @@ extension RegisterViewController {
                 return
             }
 
-            // Successfully created user, navigate to main screen
             let eventViewController = EventsViewController()
             let navigationController = UINavigationController(
                 rootViewController: eventViewController)

@@ -8,7 +8,7 @@
 import UIKit
 
 class ProgressSpinnerViewController: UIViewController {
-    
+
     private var activityIndicator: UIActivityIndicatorView!
 
     override func viewDidLoad() {
@@ -19,23 +19,25 @@ class ProgressSpinnerViewController: UIViewController {
 
     private func setupActivityIndicator() {
         activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = UIColor(red: 190/255, green: 40/255, blue: 60/255, alpha: 1.0)
+        activityIndicator.color = UIColor(
+            red: 190 / 255, green: 40 / 255, blue: 60 / 255, alpha: 1.0)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
-        
-        // Center the activity indicator
+
         NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            activityIndicator.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(
+                equalTo: view.centerYAnchor),
         ])
-        
+
         activityIndicator.startAnimating()
     }
-    
+
     func startSpinner() {
         activityIndicator.startAnimating()
     }
-    
+
     func stopSpinner() {
         activityIndicator.stopAnimating()
     }
