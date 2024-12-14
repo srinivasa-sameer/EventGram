@@ -20,6 +20,7 @@ class EventDetailsView: UIView {
     var locationLabel: UILabel!
     var bookTicketButton: UIButton!
     var mapView: MKMapView!
+    var addToCalendarButton: UIButton!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,6 +34,7 @@ class EventDetailsView: UIView {
         setupLocationSection()
         setupBookTicketButton()
         setupMapView()
+        setupAddToCalendarButton()
         initConstraints()
     }
 
@@ -125,13 +127,24 @@ class EventDetailsView: UIView {
         self.addSubview(bookTicketButton)
     }
 
+    func setupAddToCalendarButton() {
+        addToCalendarButton = UIButton()
+        addToCalendarButton.setTitle("Add to Calendar", for: .normal)
+        addToCalendarButton.backgroundColor = UIColor(
+            red: 190 / 255, green: 40 / 255, blue: 60 / 255, alpha: 1.0)
+        addToCalendarButton.layer.cornerRadius = 25
+        addToCalendarButton.isHidden = true  // Initially hidden
+        addToCalendarButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(addToCalendarButton)
+    }
+
     func initConstraints() {
         NSLayoutConstraint.activate([
             eventImageView.topAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.topAnchor),
             eventImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             eventImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            eventImageView.heightAnchor.constraint(equalToConstant: 200),
+            eventImageView.heightAnchor.constraint(equalToConstant: 150),
 
             titleLabel.topAnchor.constraint(
                 equalTo: eventImageView.bottomAnchor, constant: 16),
@@ -192,7 +205,15 @@ class EventDetailsView: UIView {
             bookTicketButton.trailingAnchor.constraint(
                 equalTo: trailingAnchor, constant: -16),
             bookTicketButton.heightAnchor.constraint(equalToConstant: 50),
-            bookTicketButton.bottomAnchor.constraint(
+
+            addToCalendarButton.topAnchor.constraint(
+                equalTo: bookTicketButton.bottomAnchor, constant: 16),
+            addToCalendarButton.leadingAnchor.constraint(
+                equalTo: leadingAnchor, constant: 16),
+            addToCalendarButton.trailingAnchor.constraint(
+                equalTo: trailingAnchor, constant: -16),
+            addToCalendarButton.heightAnchor.constraint(equalToConstant: 50),
+            addToCalendarButton.bottomAnchor.constraint(
                 equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
         ])
     }

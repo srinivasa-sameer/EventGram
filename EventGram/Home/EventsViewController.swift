@@ -26,12 +26,20 @@ class EventsViewController: UIViewController {
         mainScreen.tableViewEvents.dataSource = self
         mainScreen.tableViewEvents.delegate = self
         mainScreen.tableViewEvents.separatorStyle = .none
+        
+        mainScreen.calendarButton.addTarget(self, action: #selector(calendarButtonTapped), for: .touchUpInside)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchUpcomingEvents()
     }
+    
+    @objc func calendarButtonTapped() {
+        let calendarVC = CalendarViewController()
+        navigationController?.pushViewController(calendarVC, animated: true)
+    }
+
 
     private func fetchUpcomingEvents() {
         let db = Firestore.firestore()

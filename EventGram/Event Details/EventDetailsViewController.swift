@@ -6,6 +6,7 @@
 //
 
 import CoreLocation
+import EventKit
 import FirebaseAuth
 import FirebaseFirestore
 import MapKit
@@ -18,6 +19,7 @@ class EventDetailsViewController: UIViewController {
     let locationManager = CLLocationManager()
     let geocoder = CLGeocoder()
     private var userLocation: CLLocation?
+    let eventStore = EKEventStore()
 
     override func loadView() {
         view = detailsView
@@ -47,11 +49,57 @@ class EventDetailsViewController: UIViewController {
         detailsView.bookTicketButton.addTarget(
             self, action: #selector(onBookTicketTapped), for: .touchUpInside)
 
+        detailsView.addToCalendarButton.addTarget(
+            self, action: #selector(onAddToCalendarTapped), for: .touchUpInside)
+
         setupLocation()
 
         if let event = event {
             updateUI(with: event)
             searchAndDisplayLocation()
+        }
+    }
+
+    @objc func onAddToCalendarTapped() {
+        Task {
+            do {
+                let granted = try await eventStore.requestFullAccessToEvents()
+                if granted {
+                    guard let event = self.event else { return }
+                    self.addEventToCalendar(event)
+                } else {
+                    await MainActor.run {
+                        self.showAlert(message: "Calendar Access Denied")
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    self.showAlert(message: "Failed to access calendar")
+                }
+            }
+        }
+    }
+
+    func addEventToCalendar(_ event: Event) {
+        let calendarEvent = EKEvent(eventStore: eventStore)
+        calendarEvent.title = event.title
+        calendarEvent.notes = event.description
+        calendarEvent.startDate = event.date
+        calendarEvent.endDate = event.date.addingTimeInterval(2 * 60 * 60)  // 2 hours duration
+        calendarEvent.location = event.location
+        calendarEvent.calendar = eventStore.defaultCalendarForNewEvents
+
+        do {
+            try eventStore.save(calendarEvent, span: .thisEvent)
+            DispatchQueue.main.async {
+                self.showAlert(message: "Event added to calendar")
+                self.detailsView.addToCalendarButton.isHidden = true
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.showAlert(message: "Failed to add event to calendar")
+                self.detailsView.addToCalendarButton.isHidden = true
+            }
         }
     }
 
@@ -86,11 +134,6 @@ class EventDetailsViewController: UIViewController {
     func updateUI(with event: Event) {
         detailsView.titleLabel.text = event.title
         detailsView.descriptionLabel.text = event.description
-        //        detailsView.dateLabel.text = DateFormatter.localizedString(
-        //            from: event.date,
-        //            dateStyle: .medium,
-        //            timeStyle: .short
-        //        )
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"  // Includes the UTC timezone
         let dateString = dateFormatter.string(from: event.date)
@@ -179,6 +222,8 @@ class EventDetailsViewController: UIViewController {
                                 action: #selector(
                                     self?.onCancelRegistrationTapped),
                                 for: .touchUpInside)
+                            self?.detailsView.addToCalendarButton.isHidden =
+                                false
                         } else {
                             self?.detailsView.bookTicketButton.setTitle(
                                 "Book Ticket", for: .normal)
@@ -188,6 +233,8 @@ class EventDetailsViewController: UIViewController {
                                     green: 40 / 255,
                                     blue: 60 / 255,
                                     alpha: 1.0)
+                            self?.detailsView.addToCalendarButton.isHidden =
+                                true
                         }
                     } else if role == "Club Admin" {
                         self?.detailsView.bookTicketButton.isHidden = true
